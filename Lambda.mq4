@@ -29,7 +29,7 @@
 
 /**
  * Bearish
- *   SS 2,3,4  - Shooting Star 
+ *   SS 2,3,4  - Shooting Star
  *   E_Star    - Evening Star
  *   E_Doji    - Evening Doji Star
  *   DCC       - Dark Cloud Pattern
@@ -132,12 +132,12 @@ string  p3            = " 3 = low";
 string  p4            = " 4 = median(high+low)/2";
 string  p5            = " 5 = typical(high+low+close)/3";
 string  p6            = " 6 = weighted(high+low+close+close)/4";
-double sogliaMinima_velocita=2; //[sogliaMinima_velocita] - Soglia Minima di Velocit√†
-string smin0          = " misura in pip della minima velocit√† di soglia, cio√® della minima variazione di pip, che si deve avere su due punti della media mobile";
-string smin1          = " perch√© si consideri il mercato corrente in trend e non in laterale.";
+double sogliaMinima_velocita=2; //[sogliaMinima_velocita] - Soglia Minima di Velocit‡
+string smin0          = " misura in pip della minima velocit‡ di soglia, cioË della minima variazione di pip, che si deve avere su due punti della media mobile";
+string smin1          = " perchÈ si consideri il mercato corrente in trend e non in laterale.";
 double sogliaMinima_accelerazione=3; //[sogliaMinima_accelerazione] - Soglia Minima di Accelerazione
-string smin2          = " misura in pip della minima variazione di velocit√† che la media mobile deve avere su due punti della media mobile";
-string smin3          = " perch√© si consideri che il mercato sta dimnostrando una forza di accelerazione in grado di far partire un trend";
+string smin2          = " misura in pip della minima variazione di velocit‡ che la media mobile deve avere su due punti della media mobile";
+string smin3          = " perchÈ si consideri che il mercato sta dimnostrando una forza di accelerazione in grado di far partire un trend";
 bool regressione_R1   = true;   //[regressione_R1] - Se false, la retta di regressione R1 non viene visualizzata
 int tfInMinuti_R1     = 60;     //[tfInMinuti_R1] - Timeframe in minuti della retta di regressione R1
 int PeriodRegr_R1     = 3;      //[PeriodRegr_R1] - Numero di barre della retta di regressione R1
@@ -361,7 +361,7 @@ double vol_m[];
 double vol_t[];
 double ind_c[];
 double soglie[];
-double regression_line[];           // array dei valori della retta di regressione 
+double regression_line[];           // array dei valori della retta di regressione
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -405,23 +405,23 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
    //lastBarTimeGMT = StrToTime(lastBarTimeStruct.year+"."+lastBarTimeStruct.mon+"."+lastBarTimeStruct.day+" "+(lastBarTimeStruct.hour-timeGMTOffset)+":"+lastBarTimeStruct.min+":"+lastBarTimeStruct.sec);
    currentBarTimeGMT = get_TimeToGMT(iTime(Symbol(),PERIOD_M1,0));
    lastBarTimeGMT = currentBarTimeGMT;
-   
+
 //--- initialize sqlite engine
-    if (!sqlite_init()) 
+    if (!sqlite_init())
     {
       Alert("DB Initialization failed.");
       return(INIT_FAILED);
     }
-    
+
     db = StringConcatenate("LambdaDB-", AccountNumber(), ".db");
-    
+
 //--- create schema if tables do not exist
    //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
    if (!do_check_table_exists(db, "HeatMap"))
    {
       Print("Creating schema for ", db + " / HeatMap");
       string sql = "CREATE TABLE 'HeatMap' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'Time' INTEGER, 'TimeFrame' INTEGER, ";
-             sql+= "'Pair1' TEXT, 'Pair2' TEXT, 'AvgCorrelation' REAL, 'DailyPercentChange' REAL)"; 
+             sql+= "'Pair1' TEXT, 'Pair2' TEXT, 'AvgCorrelation' REAL, 'DailyPercentChange' REAL)";
       do_exec(db, sql);
    }
    /*else if( db_reset )
@@ -431,7 +431,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       handle = 0;
       do_exec(db, sql);
    }*/
-    
+
    //-- 'CurrencyData' --> 'Time', 'TimeFrame', 'Pair', 'High', 'Ask', 'Bid', 'Low', 'PIPRange', 'BidRatio', 'RelStr1', 'RelStr2'
    if (!do_check_table_exists(db, "CurrencyData")) {
       Print("Creating schema for ", db + " / CurrencyData");
@@ -460,7 +460,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       handle = 0;
       do_exec(db, sql);
    }*/
-   
+
    //-- 'Pivots' --> 'Time', 'Currency', 'FhrR1', 'FhrR2', 'FhrR3', 'FhrS1', 'FhrS2', 'FhrS3', 'FhrP', 'DR1', 'DR2', 'DR3', 'DS1', 'DS2', 'DS3', 'DP'
    if (!do_check_table_exists(db, "Pivots")) {
       Print("Creating schema for ", db + " / Pivots");
@@ -474,7 +474,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       handle = 0;
       do_exec(db, sql);
    }*/
-   
+
    //-- 'Signals' --> 'Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5', 'Value6', 'Value7', 'Value8', 'Value9'
    if (!do_check_table_exists(db, "Signals")) {
       Print("Creating schema for ", db + " / Signals");
@@ -503,7 +503,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
    //-- 'WeightMatrix' --> 'SignalType', 'Direction', 'MaxPoint', 'MinPoint', 'CurrentBar', 'LastBar', 'EuroSessionOpen', 'EuroSessionClosed', 'MorningSession', 'AfternoonSession', 'NightSession', 'StrengthStrong', 'StrengthWeak', 'DailyPercentHot', 'DailyPercentCold', 'PivotNear', 'PivotFar', 'SupportNear', 'SupportFar', 'ResistanceNear', 'ResistanceFar', 'DailyLevelNear', 'DailyLevelFar'
    if ( db_reset || !do_check_table_exists(db, "WeightMatrix") ) {
       string sql;
-      
+
       if( !do_check_table_exists(db, "WeightMatrix" ) )
       {
          Print("Creating schema for ", db + " / WeightMatrix");
@@ -518,27 +518,27 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
       do_exec(db, sql);
-      
-      //-- BB Weight Matrix      
+
+      //-- BB Weight Matrix
              sql = "INSERT INTO 'WeightMatrix'('SignalType', 'Direction'   , 'MaxPoint', 'MinPoint', 'CurrentBar', 'LastBar', 'EuroSessionOpen', 'EuroSessionClosed', 'MorningSession', 'AfternoonSession', 'NightSession', 'StrengthStrong', 'StrengthWeak', 'DailyPercentHot', 'DailyPercentCold', 'PivotNear', 'PivotFar', 'SupportNear', 'SupportFar', 'ResistanceNear', 'ResistanceFar', 'DailyLevelNear', 'DailyLevelFar') ";
                                  sql+= "VALUES('BB'        , '"+DIR_LONG+"',  21       ,  11       ,  1          ,  2       ,  2               ,  1                 ,  2              ,  1                ,  1            ,  2              ,  0            ,  1               ,  -1               ,  0         ,  2        ,  2           ,  0          ,  0              ,  2             ,  0              ,  2)";
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
       do_exec(db, sql);
-      
+
              sql = "INSERT INTO 'WeightMatrix'('SignalType', 'Direction'    , 'MaxPoint', 'MinPoint', 'CurrentBar', 'LastBar', 'EuroSessionOpen', 'EuroSessionClosed', 'MorningSession', 'AfternoonSession', 'NightSession', 'StrengthStrong', 'StrengthWeak', 'DailyPercentHot', 'DailyPercentCold', 'PivotNear', 'PivotFar', 'SupportNear', 'SupportFar', 'ResistanceNear', 'ResistanceFar', 'DailyLevelNear', 'DailyLevelFar') ";
                                  sql+= "VALUES('BB'        , '"+DIR_SHORT+"',  21       ,  11       ,  1          ,  2       ,  2               ,  1                 ,  2              ,  1                ,  1            ,  2              ,  0            ,  1               ,  -1               ,  0         ,  2        ,  0           ,  2          ,  2              ,  0             ,  0              ,  2)";
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
       do_exec(db, sql);
 
-      //-- ISW Weight Matrix      
+      //-- ISW Weight Matrix
              sql = "INSERT INTO 'WeightMatrix'('SignalType', 'Direction'    , 'MaxPoint', 'MinPoint', 'CurrentBar', 'LastBar', 'EuroSessionOpen', 'EuroSessionClosed', 'MorningSession', 'AfternoonSession', 'NightSession', 'StrengthStrong', 'StrengthWeak', 'DailyPercentHot', 'DailyPercentCold', 'PivotNear', 'PivotFar', 'SupportNear', 'SupportFar', 'ResistanceNear', 'ResistanceFar', 'DailyLevelNear', 'DailyLevelFar') ";
                                  sql+= "VALUES('ISW'       , '"+DIR_LONG +"',  21       ,  11       ,  1          ,  2       ,  2               ,  1                 ,  2              ,  1                ,  1            ,  2              ,  0            ,  1               ,  -1               ,  0         ,  2        ,  2           ,  0          ,  0              ,  2             ,  0              ,  2)";
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
       do_exec(db, sql);
-      
+
              sql = "INSERT INTO 'WeightMatrix'('SignalType', 'Direction'    , 'MaxPoint', 'MinPoint', 'CurrentBar', 'LastBar', 'EuroSessionOpen', 'EuroSessionClosed', 'MorningSession', 'AfternoonSession', 'NightSession', 'StrengthStrong', 'StrengthWeak', 'DailyPercentHot', 'DailyPercentCold', 'PivotNear', 'PivotFar', 'SupportNear', 'SupportFar', 'ResistanceNear', 'ResistanceFar', 'DailyLevelNear', 'DailyLevelFar') ";
                                  sql+= "VALUES('ISW'       , '"+DIR_SHORT+"',  21       ,  11       ,  1          ,  2       ,  2               ,  1                 ,  2              ,  1                ,  1            ,  2              ,  0            ,  1               ,  -1               ,  0         ,  2        ,  0           ,  2          ,  2              ,  0             ,  0              ,  2)";
       if (handle > 0) sqlite_free_query(handle);
@@ -550,11 +550,11 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
    {
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
-      
-      //-- BB Weight Matrix 
-      
+
+      //-- BB Weight Matrix
+
       handle = sqlite_query(db, "SELECT MaxPoint, MinPoint, CurrentBar, LastBar, EuroSessionOpen, EuroSessionClosed, MorningSession, AfternoonSession, NightSession, StrengthStrong, StrengthWeak, DailyPercentHot, DailyPercentCold, PivotNear, PivotFar, SupportNear, SupportFar, ResistanceNear, ResistanceFar, DailyLevelNear, DailyLevelFar FROM WeightMatrix WHERE SignalType = 'BB' AND Direction = "+DIR_LONG+" ORDER BY id DESC LIMIT 1", cols);
-      if(sqlite_next_row(handle) > 0) 
+      if(sqlite_next_row(handle) > 0)
       {
          BB_LONG_MaxPoint            =   StringToDouble(sqlite_get_col(handle, 0));
          BB_LONG_MinPoint            =   StringToDouble(sqlite_get_col(handle, 1));
@@ -582,7 +582,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       handle = 0;
 
       handle = sqlite_query(db, "SELECT MaxPoint, MinPoint, CurrentBar, LastBar, EuroSessionOpen, EuroSessionClosed, MorningSession, AfternoonSession, NightSession, StrengthStrong, StrengthWeak, DailyPercentHot, DailyPercentCold, PivotNear, PivotFar, SupportNear, SupportFar, ResistanceNear, ResistanceFar, DailyLevelNear, DailyLevelFar FROM WeightMatrix WHERE SignalType = 'BB' AND Direction = "+DIR_SHORT+" ORDER BY id DESC LIMIT 1", cols);
-      if(sqlite_next_row(handle) > 0) 
+      if(sqlite_next_row(handle) > 0)
       {
          BB_SHORT_MaxPoint            =   StringToDouble(sqlite_get_col(handle, 0));
          BB_SHORT_MinPoint            =   StringToDouble(sqlite_get_col(handle, 1));
@@ -609,10 +609,10 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
 
-      //-- ISW Weight Matrix 
-      
+      //-- ISW Weight Matrix
+
       handle = sqlite_query(db, "SELECT MaxPoint, MinPoint, CurrentBar, LastBar, EuroSessionOpen, EuroSessionClosed, MorningSession, AfternoonSession, NightSession, StrengthStrong, StrengthWeak, DailyPercentHot, DailyPercentCold, PivotNear, PivotFar, SupportNear, SupportFar, ResistanceNear, ResistanceFar, DailyLevelNear, DailyLevelFar FROM WeightMatrix WHERE SignalType = 'ISW' AND Direction = "+DIR_LONG+" ORDER BY id DESC LIMIT 1", cols);
-      if(sqlite_next_row(handle) > 0) 
+      if(sqlite_next_row(handle) > 0)
       {
          ISW_LONG_MaxPoint            =   StringToDouble(sqlite_get_col(handle, 0));
          ISW_LONG_MinPoint            =   StringToDouble(sqlite_get_col(handle, 1));
@@ -640,7 +640,7 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
       handle = 0;
 
       handle = sqlite_query(db, "SELECT MaxPoint, MinPoint, CurrentBar, LastBar, EuroSessionOpen, EuroSessionClosed, MorningSession, AfternoonSession, NightSession, StrengthStrong, StrengthWeak, DailyPercentHot, DailyPercentCold, PivotNear, PivotFar, SupportNear, SupportFar, ResistanceNear, ResistanceFar, DailyLevelNear, DailyLevelFar FROM WeightMatrix WHERE SignalType = 'ISW' AND Direction = "+DIR_SHORT+" ORDER BY id DESC LIMIT 1", cols);
-      if(sqlite_next_row(handle) > 0) 
+      if(sqlite_next_row(handle) > 0)
       {
          ISW_SHORT_MaxPoint            =   StringToDouble(sqlite_get_col(handle, 0));
          ISW_SHORT_MinPoint            =   StringToDouble(sqlite_get_col(handle, 1));
@@ -674,10 +674,10 @@ Fhr_S1=0; Fhr_S2=0; Fhr_S3=0;
    if ( !do_check_table_exists(db, "Statistics")) {
      Print("Creating schema for ", db + " / Statistics");
      do_exec(db, "CREATE VIEW 'Statistics' AS SELECT T.*, Winners, WonPoints, Losers, LostPoints, BuyTrades, BuyPoints, SellTrades, SellPoints, ((Winners*1.0/Trades)*100) PercWon,((Losers*1.0/Trades)*100) PercLost,((BuyTrades*1.0/Trades)*100) PercBuy,((SellTrades*1.0/Trades)*100) PercSell FROM ((SELECT Pair, SignalType, count(*) 'Trades', sum(RecentPoints) 'Points' FROM Trades GROUP BY Pair,SignalType) 'T' LEFT JOIN (SELECT Pair, SignalType, count(*) 'Winners', sum(RecentPoints) 'WonPoints' FROM Trades WHERE RecentPoints >= 0 GROUP BY Pair,SignalType) 'W' ON T.Pair = W.Pair AND T.SignalType = W.SignalType LEFT JOIN (SELECT Pair, SignalType, count(*) 'Losers', sum(RecentPoints) 'LostPoints' FROM Trades WHERE RecentPoints < 0 GROUP BY Pair,SignalType) 'L' ON T.Pair = L.Pair AND T.SignalType = L.SignalType LEFT JOIN (SELECT Pair, SignalType, count(*) 'BuyTrades', sum(RecentPoints) 'BuyPoints' FROM Trades WHERE Direction = 1 GROUP BY Pair,SignalType) 'B' ON T.Pair = B.Pair AND T.SignalType = B.SignalType LEFT JOIN (SELECT Pair, SignalType, count(*) 'SellTrades', sum(RecentPoints) 'SellPoints' FROM Trades WHERE Direction = -1 GROUP BY Pair,SignalType) 'S' ON T.Pair = S.Pair AND T.SignalType = S.SignalType)");
-   }   
+   }
 
 //---
-   ArraySetAsSeries(DailyBar,true);   
+   ArraySetAsSeries(DailyBar,true);
    db_populated = false;
 //---
    VerboseLog("--------------------------------------------------------");
@@ -697,7 +697,7 @@ void OnDeinit(const int reason)
 //--- deinit sqlite engine
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
-   sqlite_finalize();      
+   sqlite_finalize();
 }
 
 //+------------------------------------------------------------------+
@@ -705,7 +705,7 @@ void OnDeinit(const int reason)
 //+------------------------------------------------------------------+
 void OnTick()
 {
-   global_counter++;   
+   global_counter++;
 //---
    bool is_new_bar = is_a_new_bar();
 //---
@@ -724,7 +724,7 @@ void OnTick()
 //---
    int h_eu_session_hours  = hours_from_session_start(Euro_London_GMT_Start);
    bool h_eu_session_start = is_market_session_open(Euro_London_GMT_Start,Euro_London_GMT_End);
-   
+
    int h_asian_session_hours = hours_from_session_start(Asia_Tokyo_GMT_Start);
 //--- Check Signals - every X ticks
 
@@ -733,7 +733,7 @@ void OnTick()
    {
       sqBarIsOpen = true;
    }
-   
+
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
 
@@ -741,22 +741,22 @@ if (global_counter % skip_ticks == 0 ) {
 
    Hash *h  = new Hash();
    handleSig = sqlite_query(db, "SELECT * FROM 'Signals' ORDER BY LastUpdate ASC", cols);
-   while(sqlite_next_row(handleSig) > 0) 
+   while(sqlite_next_row(handleSig) > 0)
    {
       string   sig_id     = sqlite_get_col(handleSig, 0);
       string sig_type     = sqlite_get_col(handleSig, 6);
       h.hPutLong(sig_type+"_"+sig_id,StringToInteger(sig_id));
    }
-   
+
    if (handleSig > 0) sqlite_free_query(handleSig);
    handleSig = 0;
-   
+
    HashLoop *l ;
    for( l = new HashLoop(h) ; l.hasNext() ; l.next()) {
       long sig_id = l.valLong();
-      
+
       handle = sqlite_query(db, "SELECT * FROM 'Signals' WHERE id = "+sig_id+" ORDER BY LastUpdate ASC LIMIT 1", cols);
-      if(sqlite_next_row(handle) > 0) 
+      if(sqlite_next_row(handle) > 0)
       {
          datetime sig_time   =       StrToTime(sqlite_get_col(handle, 1));
          int sig_timeFrame   = StringToInteger(sqlite_get_col(handle, 2));
@@ -783,15 +783,15 @@ if (global_counter % skip_ticks == 0 ) {
          double sig_value7   = StringToDouble(sqlite_get_col(handle, 23));
          double sig_value8   = StringToDouble(sqlite_get_col(handle, 24));
          double sig_value9   = StringToDouble(sqlite_get_col(handle, 25));
-   
+
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          //-- Volatility
          bool volatility = sqVolatility(sig_currency,sig_timeFrame);
-         
+
          int time_difference = (TimeGMT() - sig_last_u)/60;
-               
+
          if( sig_hits < 0 || time_difference > sig_timeFrame )
          {
             //Print("Delete tuple from ", db + " / Signals");
@@ -801,18 +801,18 @@ if (global_counter % skip_ticks == 0 ) {
             handle = 0;
             do_exec(db, sql);
          }
-         
+
          //---- BB Signals
          else if( sig_type == "BB" && sig_hits >= 0 )
          {
             //--- Signal Type 'BB' - Confirmation
-            
+
               HideTestIndicators(true);
                double bb_squeeze_green_0  = bb_squeeze_dark(sig_currency, sig_timeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
                         //iCustom(sig_currency, sig_timeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
                double bb_squeeze_green_1  = bb_squeeze_dark(sig_currency, sig_timeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
                         //iCustom(sig_currency, sig_timeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
-               
+
                double upTrendStop         = doda_bands2(sig_currency, sig_timeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
                double downTrendStop       = doda_bands2(sig_currency, sig_timeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
                double upTrendSignal       = doda_bands2(sig_currency, sig_timeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 2, 0);
@@ -821,7 +821,7 @@ if (global_counter % skip_ticks == 0 ) {
                double upTrendStop_H       = doda_bands2(sig_currency, get_HigherTimeFrame(sig_timeFrame), "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
                double downTrendStop_H     = doda_bands2(sig_currency, get_HigherTimeFrame(sig_timeFrame), "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
               HideTestIndicators(false);
-   
+
             int points = 0;
             //-- Current or Last Bar Signal Confirmation
             if( sqBarIsOpen )
@@ -841,7 +841,7 @@ if (global_counter % skip_ticks == 0 ) {
             //--- Japanese Candlestick Patterns - Strengthening
             int pattern = sqGetCandlePattern(sig_currency, sig_timeFrame, 1);
                 pattern = (pattern != PATTERN_UNDEFINED ? pattern : sqGetCandlePattern(sig_currency, sig_timeFrame, 0));
-                
+
             if( pattern >= 0 )
             {
                if( pattern != PATTERN_UNDEFINED )
@@ -857,7 +857,7 @@ if (global_counter % skip_ticks == 0 ) {
                      case PATTERN_BEARISH_SS4:
                      case PATTERN_BEARISH_S_E:
                         points += (sig_direction == DIR_LONG ? -2 : +2);
-                        break;                        
+                        break;
                   }
 
                   //-- Bullish Patterns
@@ -871,18 +871,18 @@ if (global_counter % skip_ticks == 0 ) {
                      case PATTERN_BULLISH_M_STAR:
                      case PATTERN_BULLISH_P_L:
                         points += (sig_direction == DIR_SHORT ? -2 : +2);
-                        break;                        
+                        break;
                   }
                }
             }
-            
+
             //-- MM Velocity and Acceleration
             //int trend = getTrend(sig_currency,sig_timeFrame,soglie);
             int trend, trend_m15, trend_m30, trend_h1;
             trend_m15 = getTrend(sig_currency,PERIOD_M15, soglie);
             trend_m30 = getTrend(sig_currency,PERIOD_M30, soglie);
             trend_h1 = getTrend(sig_currency,PERIOD_H1, soglie);
-         
+
             if(trend_m15 == TREND_CRESCENTE_FORTE && trend_m30 == TREND_CRESCENTE_FORTE && trend_h1 == TREND_CRESCENTE_FORTE) trend = TREND_CRESCENTE_FORTE;
             else if(trend_m15 == TREND_DECRESCENTE_FORTE && trend_m30 == TREND_DECRESCENTE_FORTE && trend_h1 == TREND_DECRESCENTE_FORTE) trend = TREND_DECRESCENTE_FORTE;
             else trend = TREND_LATERALE;
@@ -913,64 +913,64 @@ if (global_counter % skip_ticks == 0 ) {
                   points += -1;
                   break;
             }
-            
+
             //-- Market Sessions
             if( h_eu_session_start ) points += (sig_direction == DIR_LONG ? BB_LONG_EuroSessionOpen : BB_SHORT_EuroSessionOpen);
             else                     points += (sig_direction == DIR_LONG ? BB_LONG_EuroSessionClosed : BB_SHORT_EuroSessionClosed);
-            
+
             if( h_eu_session_hours < 5 )                                points += (sig_direction == DIR_LONG ? BB_LONG_MorningSession : BB_SHORT_MorningSession);
             if( h_eu_session_hours >= 5 && h_eu_session_hours < 10)     points += (sig_direction == DIR_LONG ? BB_LONG_AfternoonSession : BB_SHORT_AfternoonSession);
             if( h_eu_session_hours >= 10 && h_asian_session_hours < 1 ) points += (sig_direction == DIR_LONG ? BB_LONG_NightSession : BB_SHORT_NightSession);
-            
+
             //-- Individual Strength and Weakness
             string curr1    = StringSubstr(sig_currency,0,3);
             string curr2    = StringSubstr(sig_currency,3,5);
-   
+
             double strength1 = 0;
             double strength2 = 0;
-            
+
             //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr1+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength1  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr2+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength2  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-           
+
             if(strength1 > 7 && strength2 < 3 && sig_direction == DIR_LONG )  points += BB_LONG_StrengthStrong;
             else if(strength1 - strength2 >= 4 && sig_direction == DIR_LONG ) points += BB_LONG_StrengthWeak;
-            
+
             if(strength2 > 7 && strength1 < 3 && sig_direction == DIR_SHORT )  points += BB_SHORT_StrengthStrong;
             else if(strength2 - strength1 >= 4 && sig_direction == DIR_SHORT ) points += BB_SHORT_StrengthWeak;
-            
+
             //-- Daily Percent Rate Consistency
             double dailyPercentChange = 0;
-            
+
             //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
             handle = sqlite_query(db, "SELECT DailyPercentChange FROM 'HeatMap' WHERE Pair2 = '"+sig_currency+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                dailyPercentChange  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             //-- Daily Percent Range Concordance
             int dailyPercentChangeConcordanceCounter = 0;
             handle = sqlite_query(db, "SELECT distinct(DailyPercentChange),TimeFrame FROM 'HeatMap' WHERE Pair2 = '"+sig_currency+"' AND TimeFrame <> "+sig_timeFrame+" ORDER BY id DESC", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                double dailyPercentChange2 = StringToDouble(sqlite_get_col(handle, 0));
-               
+
                if( dailyPercentChange > 0 && dailyPercentChange2 >= dailyPercentChange )
                {
                   dailyPercentChangeConcordanceCounter += 1;
@@ -982,20 +982,20 @@ if (global_counter % skip_ticks == 0 ) {
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-                        
+
             if( /*(h_asian_session_hours <= 1 || h_eu_session_hours <= 1) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange <= HeatMapDailyPercRateTholdMax && dailyPercentChange >= HeatMapDailyPercRateTholdMin && sig_direction == DIR_LONG )    points += BB_LONG_DailyPercentHot;
             else if( sig_direction == DIR_LONG ) points += BB_LONG_DailyPercentCold;
-   
+
             if( /*(h_asian_session_hours <= 1 || h_eu_session_hours <= 1) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange >= -HeatMapDailyPercRateTholdMax && dailyPercentChange <= -HeatMapDailyPercRateTholdMin && sig_direction == DIR_SHORT ) points += BB_SHORT_DailyPercentHot;
             else if( sig_direction == DIR_SHORT ) points += BB_SHORT_DailyPercentCold;
-            
+
             //-- Pivots, Support/Resistance and Price Alerts
             //get_pivots(sig_currency);
             //-- 'Pivots' --> 'Time', 'Currency', 'FhrR1', 'FhrR2', 'FhrR3', 'FhrS1', 'FhrS2', 'FhrS3', 'FhrP', 'DR1', 'DR2', 'DR3', 'DS1', 'DS2', 'DS3', 'DP'
             handle = sqlite_query(db, "SELECT * FROM 'Pivots' WHERE Currency = '"+sig_currency+"' ORDER BY id DESC LIMIT 1", cols);
             if (sqlite_next_row(handle) > 0)
             {
-               Fhr_R1 = StringToDouble(sqlite_get_col(handle,  3)); 
+               Fhr_R1 = StringToDouble(sqlite_get_col(handle,  3));
                Fhr_R2 = StringToDouble(sqlite_get_col(handle,  4));
                Fhr_R3 = StringToDouble(sqlite_get_col(handle,  5));
                Fhr_S1 = StringToDouble(sqlite_get_col(handle,  6));
@@ -1012,9 +1012,9 @@ if (global_counter % skip_ticks == 0 ) {
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             double price = 0;
-            
+
             MqlRates RatesBar[];
             ArraySetAsSeries(RatesBar,true);
             if(CopyRates(sig_currency,sig_timeFrame,0,2,RatesBar)==2)
@@ -1029,71 +1029,71 @@ if (global_counter % skip_ticks == 0 ) {
                double pipRange = (high-low)*power;
                double bidRatio = (pipRange > 0 ? ((bid-low)/pipRange*power)*100 : 0);
                       pipRange = (pipRange != 0 ? pipRange : 0.001);
-   
+
                if( sig_direction == DIR_LONG )       price = bid;
                else if( sig_direction == DIR_SHORT ) price = ask;
-                           
+
                //--
                get_NearestAndFarestSR(sig_currency, sig_timeFrame, price);
                //--
-               
+
                double distance_from_pivot             = MathAbs((price - Fhr_P)*power);
                double distance_from_support           = (price - nearest_support)*power;
                double distance_from_resistance        = (nearest_resistance - price)*power;
                double distance_from_daily_pivot       = MathAbs((price - D_P)*power);
                double distance_from_daily_support     = (price - nearest_daily_support)*power;
                double distance_from_daily_resistance  = (nearest_daily_resistance - price)*power;
-               
+
                double SR_Range   = (nearest_resistance - nearest_support)*power;
                       SR_Range   = (SR_Range != 0 ? SR_Range : 0.001);
                double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                       DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
-               
+
                //--Near/Far from the Pivot
                if( SR_Range >= 15 )
                {
                   double perc_dist_pivot = (distance_from_pivot*100)/SR_Range;
-                  
+
                   if( perc_dist_pivot >= 0 && perc_dist_pivot <= 50) points += (sig_direction == DIR_LONG ? BB_LONG_PivotNear : BB_SHORT_PivotNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_PivotFar : BB_SHORT_PivotFar);
-                  
+
                   //--Near/Far from a Support or Resistance
                   double perc_dist_support    = (distance_from_support*100)/SR_Range;
                   double perc_dist_resistance = (distance_from_resistance*100)/SR_Range;
-                  
+
                   if( perc_dist_support >= 0 && perc_dist_support <= 25) points += (sig_direction == DIR_LONG ? BB_LONG_SupportNear : BB_SHORT_SupportNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_SupportFar : BB_SHORT_SupportFar);
-                  
+
                   if( perc_dist_resistance >= 0 && perc_dist_resistance <= 25) points += (sig_direction == DIR_LONG ? BB_LONG_ResistanceNear : BB_SHORT_ResistanceNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_ResistanceFar : BB_SHORT_ResistanceFar);
-                  
+
                   double highest_distance = MathMax(distance_from_support,distance_from_resistance);
                   double fair_perc_max = highest_distance / (highest_distance - 15);
                   double fair_perc_min = (highest_distance - 15) / highest_distance;
                   double fair_perc     = (distance_from_support/distance_from_resistance);
-                  
+
                   if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
-                  
+
                }
-               
+
                //--Near/Far from a Daily level
                if( DSR_Range >= 25 )
                {
                   double perc_dist_daily_pivot      = (distance_from_daily_pivot*100)/DSR_Range;
                   double perc_dist_daily_support    = (distance_from_daily_support*100)/DSR_Range;
                   double perc_dist_daily_resistance = (distance_from_daily_resistance*100)/DSR_Range;
-                  
+
                   if( perc_dist_daily_pivot >= 0 && perc_dist_daily_pivot <= 20) points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelNear : BB_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelFar : BB_SHORT_DailyLevelFar);
-                  
+
                   if( perc_dist_daily_support >= 0 && perc_dist_daily_support <= 10) points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelNear : BB_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelFar : BB_SHORT_DailyLevelFar);
-                  
+
                   if( perc_dist_daily_resistance >= 0 && perc_dist_daily_resistance <= 10) points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelNear : BB_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_DailyLevelFar : BB_SHORT_DailyLevelFar);
                }
-               
-               //Print(points);               
+
+               //Print(points);
                if( sig_direction == DIR_LONG )
                {
                   //---
@@ -1110,10 +1110,10 @@ if (global_counter % skip_ticks == 0 ) {
 
                      int PointProfit = (OrderClosePrice() - OrderOpenPrice()) * power;
                      double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-                     
+
                      string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                      StringReplace(timeTouched,".","-");
-                     
+
                      //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
                      bool tradeAlreadyStored = false;
                      string sql = "SELECT count(*) FROM 'Trades' WHERE Ticket = " + OrderTicket();
@@ -1145,7 +1145,7 @@ if (global_counter % skip_ticks == 0 ) {
                      handle = 0;
                      do_exec(db, sql);
                   }
-                  
+
                   //-- Close opposite directions
                   if( sqLiveOrderExists(sig_currency, 2000) )
                   {
@@ -1162,7 +1162,7 @@ if (global_counter % skip_ticks == 0 ) {
                            int dataLowPoints = StrToDouble(sqlite_get_col(handle, 2));
                            double dataHighMoney = StrToDouble(sqlite_get_col(handle, 3));
                            double dataLowMoney = StrToDouble(sqlite_get_col(handle, 4));
-                           
+
                            string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                            StringReplace(timeTouched,".","-");
 
@@ -1175,7 +1175,7 @@ if (global_counter % skip_ticks == 0 ) {
                         }
                      }
                   }
-                  
+
                }
                else if( sig_direction == DIR_SHORT )
                {
@@ -1193,10 +1193,10 @@ if (global_counter % skip_ticks == 0 ) {
 
                      int PointProfit = (OrderOpenPrice() - OrderClosePrice()) * power;
                      double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-                     
+
                      string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                      StringReplace(timeTouched,".","-");
-                     
+
                      //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
                      bool tradeAlreadyStored = false;
                      string sql = "SELECT count(*) FROM 'Trades' WHERE Ticket = " + OrderTicket();
@@ -1228,7 +1228,7 @@ if (global_counter % skip_ticks == 0 ) {
                      handle = 0;
                      do_exec(db, sql);
                   }
-                  
+
                   //-- Close opposite directions
                   if( sqLiveOrderExists(sig_currency, 1000) )
                   {
@@ -1245,10 +1245,10 @@ if (global_counter % skip_ticks == 0 ) {
                            int dataLowPoints = StrToDouble(sqlite_get_col(handle, 2));
                            double dataHighMoney = StrToDouble(sqlite_get_col(handle, 3));
                            double dataLowMoney = StrToDouble(sqlite_get_col(handle, 4));
-                           
+
                            string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                            StringReplace(timeTouched,".","-");
-                           
+
                            string sql = "UPDATE Trades SET TimeTouched='" + timeTouched + "', Closed = -2, CountTouched=CountTouched+1, RecentPoints="+ PointProfit +", RecentMoney="+ MoneyProfit +" " ;
                                   sql+= ", Hedge1=" + OrderOpenPrice() + ", Hedge2=" + OrderClosePrice() + ", Hedge3=" + OrderStopLoss() + ", Hedge4=" + OrderTakeProfit() + " ";
                                   sql+= " WHERE Ticket=" + ticket + "";
@@ -1260,10 +1260,10 @@ if (global_counter % skip_ticks == 0 ) {
                   }
                }
             }
-            
+
             //Print(points);
          }
-         
+
          //---- ISW Signals
          else if( sig_type == "ISW" && sig_hits >= 0 )
          {
@@ -1271,7 +1271,7 @@ if (global_counter % skip_ticks == 0 ) {
                double upTrendStop_H       = doda_bands2(sig_currency, get_HigherTimeFrame(sig_timeFrame), "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
                double downTrendStop_H     = doda_bands2(sig_currency, get_HigherTimeFrame(sig_timeFrame), "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
             HideTestIndicators(false);
-            
+
             int points = 0;
             //-- Current or Last Bar Signal Confirmation
             if( sqBarIsOpen )
@@ -1284,11 +1284,11 @@ if (global_counter % skip_ticks == 0 ) {
                if( upTrendStop_H > 0   && sig_direction == DIR_LONG  ) points += ISW_LONG_CurrentBar;
                if( downTrendStop_H > 0 && sig_direction == DIR_SHORT ) points += ISW_SHORT_CurrentBar;
             }
-            
+
             //--- Japanese Candlestick Patterns - Strengthening
             int pattern = sqGetCandlePattern(sig_currency, sig_timeFrame, 1);
                 pattern = (pattern != PATTERN_UNDEFINED ? pattern : sqGetCandlePattern(sig_currency, sig_timeFrame, 0));
-                
+
             if( pattern >= 0 )
             {
                if( pattern != PATTERN_UNDEFINED )
@@ -1304,7 +1304,7 @@ if (global_counter % skip_ticks == 0 ) {
                      case PATTERN_BEARISH_SS4:
                      case PATTERN_BEARISH_S_E:
                         points += (sig_direction == DIR_LONG ? -2 : +2);
-                        break;                        
+                        break;
                   }
 
                   //-- Bullish Patterns
@@ -1318,18 +1318,18 @@ if (global_counter % skip_ticks == 0 ) {
                      case PATTERN_BULLISH_M_STAR:
                      case PATTERN_BULLISH_P_L:
                         points += (sig_direction == DIR_SHORT ? -2 : +2);
-                        break;                        
+                        break;
                   }
                }
             }
-            
+
             //-- MM Velocity and Acceleration
             //int trend = getTrend(sig_currency,sig_timeFrame,soglie);
             int trend, trend_m15, trend_m30, trend_h1;
             trend_m15 = getTrend(sig_currency,PERIOD_M15, soglie);
             trend_m30 = getTrend(sig_currency,PERIOD_M30, soglie);
             trend_h1 = getTrend(sig_currency,PERIOD_H1, soglie);
-         
+
             if(trend_m15 == TREND_CRESCENTE_FORTE && trend_m30 == TREND_CRESCENTE_FORTE && trend_h1 == TREND_CRESCENTE_FORTE) trend = TREND_CRESCENTE_FORTE;
             else if(trend_m15 == TREND_DECRESCENTE_FORTE && trend_m30 == TREND_DECRESCENTE_FORTE && trend_h1 == TREND_DECRESCENTE_FORTE) trend = TREND_DECRESCENTE_FORTE;
             else trend = TREND_LATERALE;
@@ -1360,64 +1360,64 @@ if (global_counter % skip_ticks == 0 ) {
                   points += -1;
                   break;
             }
-            
+
             //-- Market Sessions
             if( h_eu_session_start ) points += (sig_direction == DIR_LONG ? ISW_LONG_EuroSessionOpen   : ISW_SHORT_EuroSessionOpen);
             else                     points += (sig_direction == DIR_LONG ? ISW_LONG_EuroSessionClosed : ISW_SHORT_EuroSessionClosed);
-            
+
             if( h_eu_session_hours < 5 )                                points += (sig_direction == DIR_LONG ? ISW_LONG_MorningSession   : ISW_SHORT_MorningSession);
             if( h_eu_session_hours >= 5 && h_eu_session_hours < 10)     points += (sig_direction == DIR_LONG ? ISW_LONG_AfternoonSession : ISW_SHORT_AfternoonSession);
             if( h_eu_session_hours >= 10 && h_asian_session_hours < 1 ) points += (sig_direction == DIR_LONG ? ISW_LONG_NightSession     : ISW_SHORT_NightSession);
-            
+
             //-- Individual Strength and Weakness
             string curr1    = StringSubstr(sig_currency,0,3);
             string curr2    = StringSubstr(sig_currency,3,5);
-   
+
             double strength1 = 0;
             double strength2 = 0;
-            
+
             //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr1+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength1  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr2+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength2  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-           
+
             if(strength1 > 7 && strength2 < 3 && sig_direction == DIR_LONG )  points += ISW_LONG_StrengthStrong;
             else if(strength1 - strength2 >= 4 && sig_direction == DIR_LONG ) points += ISW_LONG_StrengthWeak;
-            
+
             if(strength2 > 7 && strength1 < 3 && sig_direction == DIR_SHORT )  points += ISW_SHORT_StrengthStrong;
             else if(strength2 - strength1 >= 4 && sig_direction == DIR_SHORT ) points += ISW_SHORT_StrengthWeak;
-            
+
             //-- Daily Percent Rate Consistency
             double dailyPercentChange = 0;
-            
+
             //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
             handle = sqlite_query(db, "SELECT DailyPercentChange FROM 'HeatMap' WHERE Pair2 = '"+sig_currency+"' AND TimeFrame = "+sig_timeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                dailyPercentChange  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             //-- Daily Percent Range Concordance
             int dailyPercentChangeConcordanceCounter = 0;
             handle = sqlite_query(db, "SELECT distinct(DailyPercentChange),TimeFrame FROM 'HeatMap' WHERE Pair2 = '"+sig_currency+"' AND TimeFrame <> "+sig_timeFrame+" ORDER BY id DESC", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                double dailyPercentChange2 = StringToDouble(sqlite_get_col(handle, 0));
-               
+
                if( dailyPercentChange > 0 && dailyPercentChange2 >= dailyPercentChange )
                {
                   dailyPercentChangeConcordanceCounter += 1;
@@ -1429,20 +1429,20 @@ if (global_counter % skip_ticks == 0 ) {
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-                        
+
             if( /*(h_asian_session_hours < 2 || h_eu_session_hours < 2) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange <= HeatMapDailyPercRateTholdMax && dailyPercentChange >= HeatMapDailyPercRateTholdMin && sig_direction == DIR_LONG )    points += ISW_LONG_DailyPercentHot;
             else if( sig_direction == DIR_LONG ) points += ISW_LONG_DailyPercentCold;
-   
+
             if( /*(h_asian_session_hours < 2 || h_eu_session_hours < 2) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange >= -HeatMapDailyPercRateTholdMax && dailyPercentChange <= -HeatMapDailyPercRateTholdMin && sig_direction == DIR_SHORT ) points += ISW_SHORT_DailyPercentHot;
             else if( sig_direction == DIR_SHORT ) points += ISW_SHORT_DailyPercentCold;
-            
+
             //-- Pivots, Support/Resistance and Price Alerts
             //get_pivots(sig_currency);
             //-- 'Pivots' --> 'Time', 'Currency', 'FhrR1', 'FhrR2', 'FhrR3', 'FhrS1', 'FhrS2', 'FhrS3', 'FhrP', 'DR1', 'DR2', 'DR3', 'DS1', 'DS2', 'DS3', 'DP'
             handle = sqlite_query(db, "SELECT * FROM 'Pivots' WHERE Currency = '"+sig_currency+"' ORDER BY id DESC LIMIT 1", cols);
             if (sqlite_next_row(handle) > 0)
             {
-               Fhr_R1 = StringToDouble(sqlite_get_col(handle,  3)); 
+               Fhr_R1 = StringToDouble(sqlite_get_col(handle,  3));
                Fhr_R2 = StringToDouble(sqlite_get_col(handle,  4));
                Fhr_R3 = StringToDouble(sqlite_get_col(handle,  5));
                Fhr_S1 = StringToDouble(sqlite_get_col(handle,  6));
@@ -1459,9 +1459,9 @@ if (global_counter % skip_ticks == 0 ) {
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             double price = 0;
-            
+
             MqlRates RatesBar[];
             ArraySetAsSeries(RatesBar,true);
             if(CopyRates(sig_currency,sig_timeFrame,0,2,RatesBar)==2)
@@ -1476,41 +1476,41 @@ if (global_counter % skip_ticks == 0 ) {
                double pipRange = (high-low)*power;
                double bidRatio = (pipRange > 0 ? ((bid-low)/pipRange*power)*100 : 0);
                       pipRange = (pipRange != 0 ? pipRange : 0.001);
-                      
+
                if( sig_direction == DIR_LONG )       price = bid;
                else if( sig_direction == DIR_SHORT ) price = ask;
-                           
+
                //--
                get_NearestAndFarestSR(sig_currency, sig_timeFrame, price);
                //--
-               
+
                double distance_from_pivot             = MathAbs((price - Fhr_P)*power);
                double distance_from_support           = (price - nearest_support)*power;
                double distance_from_resistance        = (nearest_resistance - price)*power;
                double distance_from_daily_pivot       = MathAbs((price - D_P)*power);
                double distance_from_daily_support     = (price - nearest_daily_support)*power;
                double distance_from_daily_resistance  = (nearest_daily_resistance - price)*power;
-               
+
                double SR_Range   = (nearest_resistance - nearest_support)*power;
                       SR_Range   = (SR_Range != 0 ? SR_Range : 0.001);
                double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                       DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
-               
+
                //--Near/Far from the Pivot
                if( SR_Range >= 15 )
                {
                   double perc_dist_pivot = (distance_from_pivot*100)/SR_Range;
-                  
+
                   if( perc_dist_pivot >= 0 && perc_dist_pivot <= 50) points += (sig_direction == DIR_LONG ? ISW_LONG_PivotNear : ISW_SHORT_PivotNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_PivotFar : ISW_SHORT_PivotFar);
-                  
+
                   //--Near/Far from a Support or Resistance
                   double perc_dist_support    = (distance_from_support*100)/SR_Range;
                   double perc_dist_resistance = (distance_from_resistance*100)/SR_Range;
-                  
+
                   if( perc_dist_support >= 0 && perc_dist_support <= 25) points += (sig_direction == DIR_LONG ? ISW_LONG_SupportNear : ISW_SHORT_SupportNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_SupportFar : ISW_SHORT_SupportFar);
-                  
+
                   if( perc_dist_resistance >= 0 && perc_dist_resistance <= 25) points += (sig_direction == DIR_LONG ? ISW_LONG_ResistanceNear : ISW_SHORT_ResistanceNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_ResistanceFar : ISW_SHORT_ResistanceFar);
 
@@ -1518,29 +1518,29 @@ if (global_counter % skip_ticks == 0 ) {
                   double fair_perc_max = highest_distance / (highest_distance - 15);
                   double fair_perc_min = (highest_distance - 15) / highest_distance;
                   double fair_perc     = (distance_from_support/distance_from_resistance);
-                  
+
                   if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
 
                }
-               
+
                //--Near/Far from a Daily level
                if( DSR_Range >= 25 )
                {
                   double perc_dist_daily_pivot      = (distance_from_daily_pivot*100)/DSR_Range;
                   double perc_dist_daily_support    = (distance_from_daily_support*100)/DSR_Range;
                   double perc_dist_daily_resistance = (distance_from_daily_resistance*100)/DSR_Range;
-                  
+
                   if( perc_dist_daily_pivot >= 0 && perc_dist_daily_pivot <= 20) points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelNear : ISW_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelFar : ISW_SHORT_DailyLevelFar);
-                  
+
                   if( perc_dist_daily_support >= 0 && perc_dist_daily_support <= 10) points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelNear : ISW_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelFar : ISW_SHORT_DailyLevelFar);
-                  
+
                   if( perc_dist_daily_resistance >= 0 && perc_dist_daily_resistance <= 10) points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelNear : ISW_SHORT_DailyLevelNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_DailyLevelFar : ISW_SHORT_DailyLevelFar);
                }
-               
-               //Print(points);               
+
+               //Print(points);
                if( sig_direction == DIR_LONG )
                {
                   //---
@@ -1557,10 +1557,10 @@ if (global_counter % skip_ticks == 0 ) {
 
                      int PointProfit = (OrderClosePrice() - OrderOpenPrice()) * power;
                      double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-                     
+
                      string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                      StringReplace(timeTouched,".","-");
-                     
+
                      //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
                      bool tradeAlreadyStored = false;
                      string sql = "SELECT count(*) FROM 'Trades' WHERE Ticket = " + OrderTicket();
@@ -1591,7 +1591,7 @@ if (global_counter % skip_ticks == 0 ) {
                      handle = 0;
                      do_exec(db, sql);
                   }
-                  
+
                   //-- Close opposite directions
                   if( sqLiveOrderExists(sig_currency, 2000) )
                   {
@@ -1608,7 +1608,7 @@ if (global_counter % skip_ticks == 0 ) {
                            int dataLowPoints = StrToDouble(sqlite_get_col(handle, 2));
                            double dataHighMoney = StrToDouble(sqlite_get_col(handle, 3));
                            double dataLowMoney = StrToDouble(sqlite_get_col(handle, 4));
-                           
+
                            string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                            StringReplace(timeTouched,".","-");
 
@@ -1621,7 +1621,7 @@ if (global_counter % skip_ticks == 0 ) {
                         }
                      }
                   }
-                  
+
                }
                else if( sig_direction == DIR_SHORT )
                {
@@ -1639,13 +1639,13 @@ if (global_counter % skip_ticks == 0 ) {
 
                      int PointProfit = (OrderOpenPrice() - OrderClosePrice()) * power;
                      double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-                     
+
                      string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                      StringReplace(timeTouched,".","-");
-                     
+
                      //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
                      bool tradeAlreadyStored = false;
-                     
+
                      string sql = "SELECT count(*) FROM 'Trades' WHERE Ticket = " + OrderTicket();
                      handle = sqlite_query(db, sql, cols);
                      if (sqlite_next_row(handle) > 0) {
@@ -1674,7 +1674,7 @@ if (global_counter % skip_ticks == 0 ) {
                      handle = 0;
                      do_exec(db, sql);
                   }
-                  
+
                   //-- Close opposite directions
                   if( sqLiveOrderExists(sig_currency, 1000) )
                   {
@@ -1691,10 +1691,10 @@ if (global_counter % skip_ticks == 0 ) {
                            int dataLowPoints = StrToDouble(sqlite_get_col(handle, 2));
                            double dataHighMoney = StrToDouble(sqlite_get_col(handle, 3));
                            double dataLowMoney = StrToDouble(sqlite_get_col(handle, 4));
-                           
+
                            string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
                            StringReplace(timeTouched,".","-");
-                           
+
                            string sql = "UPDATE Trades SET TimeTouched='" + timeTouched + "', Closed = -2, CountTouched=CountTouched+1, RecentPoints="+ PointProfit +", RecentMoney="+ MoneyProfit +" " ;
                                   sql+= ", Hedge1=" + OrderOpenPrice() + ", Hedge2=" + OrderClosePrice() + ", Hedge3=" + OrderStopLoss() + ", Hedge4=" + OrderTakeProfit() + " ";
                                   sql+= " WHERE Ticket=" + ticket + "";
@@ -1706,10 +1706,10 @@ if (global_counter % skip_ticks == 0 ) {
                   }
                }
             }
-            
+
             //Print(points);
          }
-         
+
       }
 
       if (handle > 0) sqlite_free_query(handle);
@@ -1747,7 +1747,7 @@ void PopulateDBStatistics()
 //--- If we add or remove a symbol to the market watch
    if(symbolsTotal!=currentSymbolsTotal)
    {
-      //--- resize arrays 
+      //--- resize arrays
       ArrayResize(marketWatchSymbolsList,currentSymbolsTotal);
       ArrayResize(percentChange,currentSymbolsTotal);
       //--- update arrays of symbol's name
@@ -1773,7 +1773,7 @@ void PopulateDBStatistics()
       } else {
          continue;
       }
-            
+
       //--- Cross Correlation Index and Individual Strength and Weakness on each TIMEFRAME
       for(int t=0;t<t_length;t++)
       {
@@ -1789,11 +1789,11 @@ void PopulateDBStatistics()
          //---
          Verbose("Populate DB:","Correlation"," ",marketWatchSymbolsList[i]," ",marketWatchSymbolsList[ii]," -> ",AvgCorrelation);
          //---
-         
+
          //--- Insert into DB
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
          handle = sqlite_query(db, "SELECT TimeFrame,Pair1 FROM 'HeatMap' WHERE Pair1 = '"+marketWatchSymbolsList[ii]+"' AND Pair2 = '"+marketWatchSymbolsList[i]+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
          if (sqlite_next_row(handle) > 0)
@@ -1805,7 +1805,7 @@ void PopulateDBStatistics()
             handle = 0;
             do_exec(db, sql);
          }
-         else 
+         else
          {
             Verbose("Inserting tuple for ", db + " / HeatMap");
             string sql = "INSERT INTO 'HeatMap'('Time','TimeFrame','Pair1','Pair2','AvgCorrelation','DailyPercentChange') ";
@@ -1816,7 +1816,7 @@ void PopulateDBStatistics()
          }
         }
        }
-      
+
       //--- Individual Strength and Weakness
          MqlRates RatesBar[];
          ArraySetAsSeries(RatesBar,true);
@@ -1835,10 +1835,10 @@ void PopulateDBStatistics()
             double pipRange = (high-low)*power;
             double bidRatio = (pipRange > 0 ? ((bid-low)/pipRange*power)*100 : 0);
                    pipRange = (pipRange != 0 ? pipRange : 0.001);
-                   
+
             double relStr1  = do_strength_lookup(bidRatio);
             double relStr2  = 9-relStr1;
-            
+
             //-- 'CurrencyData' --> 'Time', 'TimeFrame', 'Pair', 'High', 'Ask', 'Bid', 'Low', 'PIPRange', 'BidRatio', 'RelStr1', 'RelStr2'
             handle = sqlite_query(db, "SELECT TimeFrame,Pair FROM 'CurrencyData' WHERE Pair = '"+marketWatchSymbolsList[i]+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
             if (sqlite_next_row(handle) > 0)
@@ -1852,7 +1852,7 @@ void PopulateDBStatistics()
                handle = 0;
                do_exec(db, sql);
             }
-            else 
+            else
             {
                //Print("Inserting tuple for ", db + " / CurrencyData");
                string sql = "INSERT INTO 'CurrencyData'('Time','TimeFrame','Pair','High','Ask','Bid','Low','PIPRange','BidRatio','RelStr1','RelStr2') ";
@@ -1864,12 +1864,12 @@ void PopulateDBStatistics()
                do_exec(db, sql);
             }
          }
-         
+
       }
 
    }
   }
-   
+
    //-- Compute and populate the Total Strength matrix
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
@@ -1880,9 +1880,9 @@ void PopulateDBStatistics()
       int TimeFrame =  TimeFrameArray[t];
       Hash *h  = new Hash();
       Hash *h1 = new Hash();
-      
+
       handle = sqlite_query(db, "SELECT Pair,RelStr1,RelStr2 FROM 'CurrencyData' WHERE TimeFrame = "+TimeFrame+" ORDER BY id DESC", cols);
-      while(sqlite_next_row(handle) > 0) 
+      while(sqlite_next_row(handle) > 0)
       {
          string pair     = sqlite_get_col(handle, 0);
          double relStr1  = StringToDouble(sqlite_get_col(handle, 1));
@@ -1893,7 +1893,7 @@ void PopulateDBStatistics()
 
          double hRelStr1 = h.hGetDouble(curr1);
          double hRelStr2 = h.hGetDouble(curr2);
-         
+
          if(hRelStr1 == NULL || hRelStr1 == 0)
          {
             h.hPutDouble(curr1,relStr1);
@@ -1904,11 +1904,11 @@ void PopulateDBStatistics()
             //h.hDel(curr1);
             h.hPutDouble(curr1,(relStr1+hRelStr1));
             hRelStr1 = h.hGetDouble(curr1);
-            
+
             int inc = h1.hGetInt(curr1);
             h1.hPutInt(curr1,inc+1);
          }
-         
+
          if(hRelStr2 == NULL || hRelStr2 == 0)
          {
             h.hPutDouble(curr2,relStr2);
@@ -1919,7 +1919,7 @@ void PopulateDBStatistics()
             //h.hDel(curr2);
             h.hPutDouble(curr2,(relStr2+hRelStr2));
             hRelStr2 = h.hGetDouble(curr2);
-            
+
             int inc = h1.hGetInt(curr2);
             h1.hPutInt(curr2,inc+1);
          }
@@ -1927,7 +1927,7 @@ void PopulateDBStatistics()
       }
       if (handle > 0) sqlite_free_query(handle);
       handle = 0;
-      
+
       HashLoop *l ;
       for( l = new HashLoop(h) ; l.hasNext() ; l.next()) {
         string key = l.key();
@@ -1935,7 +1935,7 @@ void PopulateDBStatistics()
             inc = (inc != 0 ? inc : 1);
         double j = round((l.valDouble()/inc));
         h.hPutDouble(key, j);
-        
+
         //Print(key," = ",j);
         //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
         handle = sqlite_query(db, "SELECT TimeFrame,Currency FROM 'TotalStrength' WHERE Currency = '"+key+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
@@ -1948,7 +1948,7 @@ void PopulateDBStatistics()
             handle = 0;
             do_exec(db, sql);
          }
-        else 
+        else
          {
             //Print("Inserting tuple for ", db + " / TotalStrength");
             string sql = "INSERT INTO 'TotalStrength'('Time','TimeFrame','Currency','Strength') ";
@@ -1973,13 +1973,13 @@ void PopulateDBStatistics()
    int AvgLength = MathMin(ResultingBars, 500);
    if(ResultingBars == 0)
       AvgLength = 500;
-      
+
 //--- Main Symbol loop
    for(int i=0;i<symbolsTotal;i++)
-   { 
+   {
       string Pair = marketWatchSymbolsList[i];
       get_pivots(Pair, PERIOD_H4);
-      
+
       //--- Store Symbol Pivots
       //-- 'Pivots' --> 'Time', 'Currency', 'FhrR1', 'FhrR2', 'FhrR3', 'FhrS1', 'FhrS2', 'FhrS3', 'FhrP', 'DR1', 'DR2', 'DR3', 'DS1', 'DS2', 'DS3', 'DP'
       handle = sqlite_query(db, "SELECT * FROM 'Pivots' WHERE Currency = '"+Pair+"' ORDER BY id DESC LIMIT 1", cols);
@@ -2002,24 +2002,24 @@ void PopulateDBStatistics()
          handle = 0;
          do_exec(db, sql);
       }
-         
+
       //--- TimeFrames Loop
       for(int t=0;t<t_length;t++)
       {
          int TimeFrame =  TimeFrameArray[t];
-   
+
          MqlRates RatesBar[];
          ArraySetAsSeries(RatesBar,true);
          if(CopyRates(Pair,TimeFrame,0,AvgLength,RatesBar)==AvgLength)
          {
          //--- Signal Type 'BB'
-         
+
            HideTestIndicators(true);
             double bb_squeeze_green_0  = bb_squeeze_dark(Pair, TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
                      //iCustom(Pair, TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
             double bb_squeeze_green_1  = bb_squeeze_dark(Pair, TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
                      //iCustom(Pair, TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
-            
+
             double upTrendStop         = doda_bands2(Pair, TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
             double downTrendStop       = doda_bands2(Pair, TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
             double upTrendSignal       = doda_bands2(Pair, TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 2, 0);
@@ -2030,7 +2030,7 @@ void PopulateDBStatistics()
             double signalLineValue1_0  = i_TSRLine(Pair, TimeFrame, "_T_S_R__Signal_Line", 15, 3, 0, 1, 0); // Red
             double signalLineValue0_1  = i_TSRLine(Pair, TimeFrame, "_T_S_R__Signal_Line", 15, 3, 0, 0, 1); // Blue
             double signalLineValue1_1  = i_TSRLine(Pair, TimeFrame, "_T_S_R__Signal_Line", 15, 3, 0, 1, 1); // Red
-            
+
             //--HAMA
             double hamaValue0_0        = i_hama(Pair, TimeFrame, "HAMA_", 0, 0);
             double hamaValue1_0        = i_hama(Pair, TimeFrame, "HAMA_", 1, 0);
@@ -2040,17 +2040,17 @@ void PopulateDBStatistics()
             double hamaValue1_1        = i_hama(Pair, TimeFrame, "HAMA_", 1, 1);
             double hamaValue2_1        = i_hama(Pair, TimeFrame, "HAMA_", 2, 1);
             double hamaValue3_1        = i_hama(Pair, TimeFrame, "HAMA_", 3, 1);
-            
+
             double bbSMA_0             = iBands(Pair, TimeFrame, 20,2,0, PRICE_CLOSE, MODE_MAIN, 0);
             double bbSMA_1             = iBands(Pair, TimeFrame, 20,2,0, PRICE_CLOSE, MODE_MAIN, 1);
            HideTestIndicators(false);
-           
+
             if(bb_squeeze_green_0 != EMPTY_VALUE && bb_squeeze_green_0 == 0 && bb_squeeze_green_1 != EMPTY_VALUE && bb_squeeze_green_1 == 0)
             {
                //--- Signal Line Reinforcement
                bool strongSignalLineLong  = false;
                bool strongSignalLineShort = false;
-              
+
                   if( signalLineValue0_0 != EMPTY_VALUE && signalLineValue0_1 != EMPTY_VALUE && signalLineValue0_0 > bbSMA_0 && signalLineValue0_1 < bbSMA_1 )
                   {
                      if( upTrendStop > 0 && (hamaValue0_0 == hamaValue2_0 && hamaValue0_0 < hamaValue1_0) && (hamaValue0_1 == hamaValue2_1 && hamaValue0_1 < hamaValue1_1) )
@@ -2073,7 +2073,7 @@ void PopulateDBStatistics()
                {
                  bool updated = false;
                  int Direction = (upTrendStop > 0 ? DIR_LONG : DIR_SHORT);
-                 
+
                  //-- 'Signals' --> 'Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5', 'Value6', 'Value7', 'Value8', 'Value9'
                  handle = sqlite_query(db, "SELECT * FROM 'Signals' WHERE Currency = '"+Pair+"' AND TimeFrame = "+TimeFrame+" AND Type = 'BB' AND Direction = '"+Direction+"' AND Strength = '"+STR_STRONG+"' ORDER BY id DESC LIMIT 1", cols);
                  if (sqlite_next_row(handle) > 0)
@@ -2103,9 +2103,9 @@ void PopulateDBStatistics()
                      double sig_value7   = StringToDouble(sqlite_get_col(handle, 23));
                      double sig_value8   = StringToDouble(sqlite_get_col(handle, 24));
                      double sig_value9   = StringToDouble(sqlite_get_col(handle, 25));
-                     
+
                      int time_difference = (sig_last_u - sig_time)/60;
-                     
+
                      if(time_difference > 2*sig_timeFrame)
                      {
                         //Print("Delete tuple from ", db + " / Signals");
@@ -2128,7 +2128,7 @@ void PopulateDBStatistics()
                         updated = true;
                      }
                   }
-                 if (!updated) 
+                 if (!updated)
                   {
                      //Print("Inserting tuple for ", db + " / Signals");
                      string sql = "INSERT INTO 'Signals'('Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5') ";
@@ -2145,7 +2145,7 @@ void PopulateDBStatistics()
                {
                  bool updated = false;
                  int Direction = (upTrendStop > 0 ? DIR_LONG : DIR_SHORT);
-                 
+
                  //-- 'Signals' --> 'Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5', 'Value6', 'Value7', 'Value8', 'Value9'
                  handle = sqlite_query(db, "SELECT * FROM 'Signals' WHERE Currency = '"+Pair+"' AND TimeFrame = "+TimeFrame+" AND Type = 'BB' AND Direction = '"+Direction+"' AND Strength = '"+STR_WEAK+"' ORDER BY id DESC LIMIT 1", cols);
                  if (sqlite_next_row(handle) > 0)
@@ -2175,9 +2175,9 @@ void PopulateDBStatistics()
                      double sig_value7   = StringToDouble(sqlite_get_col(handle, 23));
                      double sig_value8   = StringToDouble(sqlite_get_col(handle, 24));
                      double sig_value9   = StringToDouble(sqlite_get_col(handle, 25));
-                     
+
                      int time_difference = (sig_last_u - sig_time)/60;
-                     
+
                      if(time_difference > 2*sig_timeFrame)
                      {
                         //Print("Delete tuple from ", db + " / Signals");
@@ -2200,7 +2200,7 @@ void PopulateDBStatistics()
                         updated = true;
                      }
                   }
-                 if (!updated) 
+                 if (!updated)
                   {
                      //Print("Inserting tuple for ", db + " / Signals");
                      string sql = "INSERT INTO 'Signals'('Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5') ";
@@ -2212,28 +2212,28 @@ void PopulateDBStatistics()
                      do_exec(db, sql);
                   }
                }
-               
+
             }
-            
+
          //--- Signal Type 'ISW'
             //-- Individual Strength and Weakness
             string curr1    = StringSubstr(Pair,0,3);
             string curr2    = StringSubstr(Pair,3,5);
-   
+
             double strength1 = 0;
             double strength2 = 0;
-            
+
             //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr1+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength1  = StringToDouble(sqlite_get_col(handle, 0));
             }
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr2+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-            while(sqlite_next_row(handle) > 0) 
+            while(sqlite_next_row(handle) > 0)
             {
                strength2  = StringToDouble(sqlite_get_col(handle, 0));
             }
@@ -2246,7 +2246,7 @@ void PopulateDBStatistics()
             {
                Direction = DIR_LONG;
                //ISW_LONG_StrengthStrong;
-               
+
                //-- HeatMap Group Confirmation LONG
                /**
                 * curr1
@@ -2302,7 +2302,7 @@ void PopulateDBStatistics()
                 }
                 if (handle > 0) sqlite_free_query(handle);
                 handle = 0;
-                
+
                 //-- ISW Signal
                 if( curr1Cnt == curr1Conf || curr2Cnt == curr2Conf )
                 {
@@ -2335,9 +2335,9 @@ void PopulateDBStatistics()
                      double sig_value7   = StringToDouble(sqlite_get_col(handle, 23));
                      double sig_value8   = StringToDouble(sqlite_get_col(handle, 24));
                      double sig_value9   = StringToDouble(sqlite_get_col(handle, 25));
-                     
+
                      int time_difference = (sig_last_u - sig_time)/60;
-                     
+
                      if(time_difference > 2*sig_timeFrame)
                      {
                         //Print("Delete tuple from ", db + " / Signals");
@@ -2360,7 +2360,7 @@ void PopulateDBStatistics()
                         updated = true;
                      }
                   }
-                 if (!updated) 
+                 if (!updated)
                   {
                      //Print("Inserting tuple for ", db + " / Signals");
                      string sql = "INSERT INTO 'Signals'('Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5') ";
@@ -2373,12 +2373,12 @@ void PopulateDBStatistics()
                   }
                }
             }
-            
+
             if(strength2 > 7 && strength1 < 3 )
             {
                Direction = DIR_SHORT;
                //ISW_SHORT_StrengthStrong;
-               
+
                //-- HeatMap Group Confirmation SHORT
                /**
                 * curr2
@@ -2434,7 +2434,7 @@ void PopulateDBStatistics()
                 }
                 if (handle > 0) sqlite_free_query(handle);
                 handle = 0;
-                
+
                 //-- ISW Signal
                 if( curr1Cnt == curr1Conf || curr2Cnt == curr2Conf )
                 {
@@ -2467,9 +2467,9 @@ void PopulateDBStatistics()
                      double sig_value7   = StringToDouble(sqlite_get_col(handle, 23));
                      double sig_value8   = StringToDouble(sqlite_get_col(handle, 24));
                      double sig_value9   = StringToDouble(sqlite_get_col(handle, 25));
-                     
+
                      int time_difference = (sig_last_u - sig_time)/60;
-                     
+
                      if(time_difference > 2*sig_timeFrame)
                      {
                         //Print("Delete tuple from ", db + " / Signals");
@@ -2492,7 +2492,7 @@ void PopulateDBStatistics()
                         updated = true;
                      }
                   }
-                 if (!updated) 
+                 if (!updated)
                   {
                      //Print("Inserting tuple for ", db + " / Signals");
                      string sql = "INSERT INTO 'Signals'('Time', 'TimeFrame', 'Currency', 'LastUpdate', 'Hits', 'Type', 'Description', 'Direction', 'Strength', 'High', 'Ask', 'Bid', 'Low', 'Open', 'TradeVolume', 'Value0', 'Value1', 'Value2', 'Value3', 'Value4', 'Value5') ";
@@ -2508,7 +2508,7 @@ void PopulateDBStatistics()
          }
       }
    }
-   
+
    //--
    db_populated = true;
    //--
@@ -2522,12 +2522,12 @@ bool is_a_new_bar()
    TimeToStruct(iTime(Symbol(),Period(),0),currentBarTimeStruct);
    currentBarTimeGMT = StrToTime(currentBarTimeStruct.year+"."+currentBarTimeStruct.mon+"."+currentBarTimeStruct.day+" "+(currentBarTimeStruct.hour-timeGMTOffset)+":"+currentBarTimeStruct.min+":"+currentBarTimeStruct.sec);
    Comment("EA Version ("+VERSION+") |" + Symbol() + " --> currentBarTimeGMT:  " + TimeToString(currentBarTimeGMT,TIME_DATE|TIME_MINUTES|TIME_SECONDS)+ " --> lastBarTimeGMT:  " + TimeToString(lastBarTimeGMT,TIME_DATE|TIME_MINUTES|TIME_SECONDS)+"\n");
-      
+
    if( currentBarTimeGMT != lastBarTimeGMT)
    {
       Comment("EA Version ("+VERSION+") |" + Symbol() + " --> currentBarTimeGMT:  " + TimeToString(currentBarTimeGMT,TIME_DATE|TIME_MINUTES|TIME_SECONDS)+ " --> lastBarTimeGMT:  " + TimeToString(lastBarTimeGMT,TIME_DATE|TIME_MINUTES|TIME_SECONDS)+"\n");
       lastBarTimeGMT = currentBarTimeGMT;
-      
+
       return(true);
    }
 
@@ -2537,13 +2537,13 @@ bool is_a_new_bar()
 int hours_from_session_start(int session_start)
 {
    TimeGMT(timeGMTStruct);
-   
+
    if(timeGMTStruct.hour<session_start)
    {
       return(24+timeGMTStruct.hour-session_start);
    }
-   
-   return(timeGMTStruct.hour-session_start);   
+
+   return(timeGMTStruct.hour-session_start);
 }
 //---
 bool is_market_session_open(int session_start, int session_end)
@@ -2595,7 +2595,7 @@ void do_exec(string db, string exp)
 double do_strength_lookup(double bid_ratio)
 {
    int relStrengthValue = -1;
-   
+
    if(bid_ratio<3)                   relStrengthValue = 0;
    if(bid_ratio>=3 && bid_ratio<10)  relStrengthValue = 1;
    if(bid_ratio>=10 && bid_ratio<25) relStrengthValue = 2;
@@ -2606,7 +2606,7 @@ double do_strength_lookup(double bid_ratio)
    if(bid_ratio>=75 && bid_ratio<90) relStrengthValue = 7;
    if(bid_ratio>=90 && bid_ratio<97) relStrengthValue = 8;
    if(bid_ratio>=97)                 relStrengthValue = 9;
-   
+
    return(relStrengthValue);
 }
 
@@ -2640,14 +2640,14 @@ double do_correlation(string PairX, string PairY, int TimeFrame)
          Correlation[i] = 0.0;
       }
    }
-   
+
    /*
    for(int i = 0; i < AvgLength; i++)
    {
       AverageCorrelation[i] = iMAOnArray(Correlation, 0, MA_Period, 0, MODE_SMA, i);
    }
    */
-   
+
    AvgCorrelation = iMAOnArray(Correlation, 0, AvgLength, 0, MODE_SMA, 0);
    //---
    Verbose("AvgCorrelation(",PairX,"/",PairY,"/",TimeFrame,")");
@@ -2659,11 +2659,11 @@ double get_Price(string Pair, int TimeFrame, int shift)
 {
    switch(Mode)
    {
-      case CLOSE_MODE: 
+      case CLOSE_MODE:
          return(iClose(Pair, TimeFrame, shift));
-      case OPENCLOSE_MODE: 
+      case OPENCLOSE_MODE:
          return(iClose(Pair, TimeFrame, shift) - iOpen(Pair, TimeFrame, shift));
-      case CLOSE_RELATIVE_MODE: 
+      case CLOSE_RELATIVE_MODE:
          return(iClose(Pair, TimeFrame, shift)/iHigh(Pair, TimeFrame, shift));
       default:
          return(0);
@@ -2676,7 +2676,7 @@ datetime get_TimeToGMT(datetime time1)
    TimeToStruct(iTime(Symbol(),PERIOD_M1,0),time1Struct);
    TimeGMT(time1GMTStruct);
    int timeOffset = (time1Struct.hour-time1GMTStruct.hour);
-   
+
    TimeToStruct(time1,time1Struct);
    //datetime time1GMT = StrToTime(time1Struct.year+"."+time1Struct.mon+"."+time1Struct.day+" "+(time1Struct.hour-timeGMTOffset)+":"+time1Struct.min+":"+time1Struct.sec);
    time1GMTStruct.year = time1Struct.year;
@@ -2686,7 +2686,7 @@ datetime get_TimeToGMT(datetime time1)
    time1GMTStruct.min  = time1Struct.min;
    time1GMTStruct.sec  = time1Struct.sec;
    datetime time1GMT = StructToTime(time1GMTStruct);
-   
+
    return(time1GMT);
 }
 
@@ -2695,7 +2695,7 @@ void get_NearestAndFarestSR(string symbol, int timeframe, double price)
    //-- Pivots, Support/Resistance and Price Alerts
    get_pivots(symbol, timeframe);
    //---
-   
+
    MqlRates RatesBar[];
    ArraySetAsSeries(RatesBar,true);
    if(CopyRates(symbol,timeframe,0,20,RatesBar)==20)
@@ -2835,7 +2835,7 @@ int get_HigherTimeFrame(int sig_timeFrame)
    //--
    switch (sig_timeFrame) {
       case 1:
-         time_frame = 5;  
+         time_frame = 5;
 
          break;
       case 5:
@@ -2849,7 +2849,7 @@ int get_HigherTimeFrame(int sig_timeFrame)
       case 30:
          time_frame = 60;
 
-         break;      
+         break;
       case 60:
          time_frame = 240;
 
@@ -2914,13 +2914,13 @@ int get_BayesanFilterPoints(int points, datetime sig_time, int sig_timeFrame, st
       datetime timeOpened = StringToTime(sqlite_get_col(handle,  0));
       int h_now = TimeHour(TimeGMT());
       int h_ref = TimeHour(timeOpened);
-      
+
       int h_interval = 1;//(int)((Euro_London_GMT_End - Euro_London_GMT_Start)/4);
       int h_now_min = h_now - h_interval;
           h_now_min = (h_now_min > 0 ? h_now_min : h_now_min + 24);
       int h_now_max = h_now + h_interval;
           h_now_max = (h_now_max <= 24 ? h_now_max : h_now_max - 24);
-      
+
       if( h_now_min < h_now_max && (h_ref >= h_now_min && h_ref <= h_now_max) ) losingOrders += 1;
       if( h_now_min > h_now_max && (h_ref >= h_now_min || h_ref <= h_now_max) ) losingOrders += 1;
    }
@@ -2937,13 +2937,13 @@ int get_BayesanFilterPoints(int points, datetime sig_time, int sig_timeFrame, st
       datetime timeOpened = StringToTime(sqlite_get_col(handle,  0));
       int h_now = TimeHour(TimeGMT());
       int h_ref = TimeHour(timeOpened);
-      
+
       int h_interval = 1;//(int)((Euro_London_GMT_End - Euro_London_GMT_Start)/4);
       int h_now_min = h_now - h_interval;
           h_now_min = (h_now_min > 0 ? h_now_min : h_now_min + 24);
       int h_now_max = h_now + h_interval;
           h_now_max = (h_now_max <= 24 ? h_now_max : h_now_max - 24);
-      
+
       if( h_now_min < h_now_max && (h_ref >= h_now_min && h_ref <= h_now_max) ) winningOrders += 1;
       if( h_now_min > h_now_max && (h_ref >= h_now_min || h_ref <= h_now_max) ) winningOrders += 1;
    }
@@ -2961,20 +2961,20 @@ int get_BayesanFilterPoints(int points, datetime sig_time, int sig_timeFrame, st
       int countTouched    = StringToInteger(sqlite_get_col(handle,  1));
       int h_now = TimeHour(TimeGMT());
       int h_ref = TimeHour(timeOpened);
-      
+
       int h_interval = 1;//(int)((Euro_London_GMT_End - Euro_London_GMT_Start)/4);
       int h_now_min = h_now - h_interval;
           h_now_min = (h_now_min > 0 ? h_now_min : h_now_min + 24);
       int h_now_max = h_now + h_interval;
           h_now_max = (h_now_max <= 24 ? h_now_max : h_now_max - 24);
-      
+
       if( h_now_min < h_now_max && (h_ref >= h_now_min && h_ref <= h_now_max) ) points -= countTouched/1000;
       if( h_now_min > h_now_max && (h_ref >= h_now_min || h_ref <= h_now_max) ) points -= countTouched/1000;
    }
-   
+
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
-   
+
   //-- Check Statistics
    handle = sqlite_query(db, "SELECT SignalType,Trades,Points,WonPoints,LostPoints,BuyTrades,SellTrades,Winners,Losers,BuyPoints,SellPoints,PercWon,PercLost,PercBuy,PercSell FROM Statistics WHERE Pair = '"+sig_currency+"' AND SignalType = '"+sig_type+"'", cols);
    if (sqlite_next_row(handle) > 0)
@@ -2994,13 +2994,13 @@ int get_BayesanFilterPoints(int points, datetime sig_time, int sig_timeFrame, st
       double   PercLost    = StringToDouble(sqlite_get_col(handle, 12));
       double   PercBuy     = StringToDouble(sqlite_get_col(handle, 13));
       double   PercSell    = StringToDouble(sqlite_get_col(handle, 14));
-      
+
       if( Points < 0 )
       {
          if( PercWon < PercSell )
          {
             points -= 1;
-            
+
             if( BuyPoints < 0 && sig_direction == DIR_LONG) points -= 1;
             if( SellPoints < 0 && sig_direction == DIR_SHORT) points -= 1;
          }
@@ -3009,15 +3009,15 @@ int get_BayesanFilterPoints(int points, datetime sig_time, int sig_timeFrame, st
       {
          if( BuyPoints > 0 && sig_direction == DIR_LONG) points += 1;
          if( SellPoints > 0 && sig_direction == DIR_SHORT) points += 1;
-         
+
          int perc_points = MathRound(2.0*(PercWon + PercLost) / 100.0);
-         
+
          points += perc_points;
-      }      
+      }
    }
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
-   
+
    return(points);
 }
 //-------------------------------
@@ -3080,9 +3080,9 @@ double get_Averages(string PairX, string PairY, int TimeFrame, int start, int in
    if(ValidDataCounter == 0)return(0);
    DispersionX /= ValidDataCounter;
    DispersionY /= ValidDataCounter;
-   
+
    CovariationXY = AverageXY - AverageX*AverageY;
-   
+
    return(CovariationXY);
 }
 
@@ -3113,7 +3113,7 @@ void get_pivots(string symbol, int timeframe)
    Fhr_R2 = Fhr_P+(Fhr_yesterday_high - Fhr_yesterday_low);
    Fhr_S2 = Fhr_P-(Fhr_yesterday_high - Fhr_yesterday_low);
 
-   
+
    Fhr_R3 = (2*Fhr_P)+(Fhr_yesterday_high-(2*Fhr_yesterday_low));
    Fhr_M5 = (Fhr_R2+Fhr_R3)/2;
    // Fhr_R2 = Fhr_P-Fhr_S1+Fhr_R1;
@@ -3167,7 +3167,7 @@ void get_pivots(string symbol, int timeframe)
    D_R2 = D_P+(D_yesterday_high - D_yesterday_low);
    D_S2 = D_P-(D_yesterday_high - D_yesterday_low);
 
-   
+
    D_R3 = (2*D_P)+(D_yesterday_high-(2*D_yesterday_low));
    D_M5 = (D_R2+D_R3)/2;
    // D_R2 = D_P-D_S1+D_R1;
@@ -3180,7 +3180,7 @@ void get_pivots(string symbol, int timeframe)
    D_M1 = (D_S1+D_S2)/2;
    // D_S2 = D_P-D_R1+D_S1;
    D_S3 = (2*D_P)-((2* D_yesterday_high)-D_yesterday_low);
-   
+
    D_M0 = (D_S2+D_S3)/2;
 
    if (D_Q > 5)
@@ -3231,22 +3231,22 @@ void manageOrders(bool sqIsBarOpen) {
       for( l = new HashLoop(h) ; l.hasNext() ; l.next())
       {
          long ticketClosed = l.valInt();
-         
+
          //-- DELETE
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          string sql = "DELETE FROM Trades " ;
                 sql+= " WHERE Ticket=" + ticketClosed + "";
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         do_exec(db, sql);         
+         do_exec(db, sql);
       }
-      
+
       delete h;
       delete l;
    }
-   
+
    //-- Check Closed
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
@@ -3260,14 +3260,14 @@ void manageOrders(bool sqIsBarOpen) {
       for( int trade=OrdersHistoryTotal()-1;trade>=0;trade-- )
       {
          OrderSelect(trade,SELECT_BY_POS,MODE_HISTORY);
-       
+
          if( OrderTicket()==ticket )
          {
             orderIsInHistory = true;
             break;
          }
       }
-      
+
       if( !orderIsInHistory )
       {
          //-- Scan if currently opened
@@ -3283,16 +3283,16 @@ void manageOrders(bool sqIsBarOpen) {
             }
          }
       }
-            
+
       if( !orderActive ) h.hPutInt("OrderClosed_"+ticket, ticket);
    }
-   
+
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
    for( l = new HashLoop(h) ; l.hasNext() ; l.next())
    {
       long ticketClosed = l.valInt();
-      
+
       if( OrderSelect(ticketClosed, SELECT_BY_TICKET, MODE_HISTORY)==true )
       {
          string symbol   = OrderSymbol();
@@ -3300,17 +3300,17 @@ void manageOrders(bool sqIsBarOpen) {
          double ask      = MarketInfo(OrderSymbol(),MODE_ASK);
          double bid      = MarketInfo(OrderSymbol(),MODE_BID);
          int    power    = MathPow(10,digits-1);
-         
+
          int PointProfit = (OrderType() == OP_BUY ? (OrderClosePrice() - OrderOpenPrice()) * power : (OrderOpenPrice() - OrderClosePrice()) * power);
          double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-         
+
          //-- UPDATE
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          string timeTouched = TimeToString(get_TimeToGMT(OrderCloseTime()),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
          StringReplace(timeTouched,".","-");
-         
+
          string sql = "UPDATE Trades SET TimeTouched='" + timeTouched + "', Closed=-1, CountTouched=CountTouched+1, RecentPoints="+ PointProfit +", RecentMoney="+ MoneyProfit + " " ;
                 sql+= ", Hedge1=" + OrderOpenPrice() + ", Hedge2=" + OrderClosePrice() + ", Hedge3=" + OrderStopLoss() + ", Hedge4=" + OrderTakeProfit() + " ";
                 sql+= " WHERE Ticket=" + ticketClosed + "";
@@ -3323,7 +3323,7 @@ void manageOrders(bool sqIsBarOpen) {
          //-- DELETE
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          string sql = "DELETE FROM Trades " ;
                 sql+= " WHERE Ticket=" + ticketClosed + "";
          if (handle > 0) sqlite_free_query(handle);
@@ -3331,10 +3331,10 @@ void manageOrders(bool sqIsBarOpen) {
          do_exec(db, sql);
       }
    }
-   
+
    if (handle > 0) sqlite_free_query(handle);
    handle = 0;
-   
+
    delete l;
    delete h;
 
@@ -3344,7 +3344,7 @@ void manageOrders(bool sqIsBarOpen) {
       if( OrderSelect(i,SELECT_BY_POS)==true )
       {
          string timeTouched = TimeToString(get_TimeToGMT(OrderOpenTime()),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
-         
+
          int orderMagicNumber = OrderMagicNumber();
          if( orderMagicNumber == 0 )
          {
@@ -3359,7 +3359,7 @@ void manageOrders(bool sqIsBarOpen) {
       }
 
       if(OrdersTotal() <= 0) return;
-   }   
+   }
 }
 
 //----------------------------------------------------------------------------
@@ -3375,17 +3375,17 @@ void manageOrder(string symbol, int orderMagicNumber) {
    double ask      = MarketInfo(symbol,MODE_ASK);
    double bid      = MarketInfo(symbol,MODE_BID);
    int    power    = MathPow(10,digits-1);
-   
+
    if(orderMagicNumber == 1000 && OrderSymbol() == symbol)
    {
-      if( OrderType() == OP_BUY) 
+      if( OrderType() == OP_BUY)
       {
          // handle only active orders
          int TimeFrame = PERIOD_D1;
          int Direction = (OrderType() == OP_BUY ? DIR_LONG : DIR_SHORT);
          int PointProfit = (OrderClosePrice() - OrderOpenPrice()) * power;
          double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-         
+
 //--------- 1.03 --
          datetime dataTimeOpened = TimeGMT();
          int dataHighPoints = PointProfit;
@@ -3406,10 +3406,10 @@ void manageOrder(string symbol, int orderMagicNumber) {
          double upTrendSignal;
          double downTrendSignal;
 //--------- 1.03 --
-         
+
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          handle = sqlite_query(db, "SELECT TimeOpened, TimeFrame, High, Low, HighMoney, LowMoney, Hedge1, Hedge2, Hedge3, Hedge4, Hedge5, Hedge6, Hedge7, Hedge8 FROM Trades WHERE Ticket=" + OrderTicket() + " LIMIT 1", cols);
          if (sqlite_next_row(handle) > 0) {
             int ticket = OrderTicket();
@@ -3429,19 +3429,19 @@ void manageOrder(string symbol, int orderMagicNumber) {
             double dataHedge8    =   StrToDouble(sqlite_get_col(handle,13));
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             //-- Update Order Status
             dataHighPoints_old = dataHighPoints;
             dataLowPoints_old  = dataLowPoints;
             if (PointProfit > dataHighPoints) dataHighPoints = PointProfit;
             if (PointProfit < dataLowPoints)  dataLowPoints = PointProfit;
-      
+
             if (MoneyProfit > dataHighMoney) dataHighMoney = MoneyProfit;
             if (MoneyProfit < dataLowMoney) dataLowMoney = MoneyProfit;
-            
+
             string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
             StringReplace(timeTouched,".","-");
-            
+
             string sql = "UPDATE Trades SET TimeTouched='" + timeTouched + "', CountTouched=CountTouched+1, RecentPoints="+ PointProfit +", RecentMoney="+ MoneyProfit +", High=" + dataHighPoints + ", Low=" + dataLowPoints + ", HighMoney=" + dataHighMoney + ", LowMoney=" + dataLowMoney + " " ;
                    sql+= ", Hedge1=" + OrderOpenPrice() + ", Hedge2=" + OrderClosePrice() + ", Hedge3=" + OrderStopLoss() + ", Hedge4=" + OrderTakeProfit() + " ";
                    sql+= " WHERE Ticket=" + ticket + "";
@@ -3453,7 +3453,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
          {
             string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
             StringReplace(timeTouched,".","-");
-            
+
             //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
             string sql = "INSERT INTO 'Trades' ('Ticket','TimeFrame','Pair','Closed','SignalType','SignalPoints','Direction','Strength','Size','TimeOpened','TimeTouched','CountTouched', 'RecentPoints', 'RecentMoney', 'High','Low','HighMoney','LowMoney','Hedge1','Hedge2','Hedge3','Hedge4') VALUES (";
                    sql+= "'" + OrderTicket() + "','" + TimeFrame + "','" + OrderSymbol() + "','0','UNKNOWN','0','" + Direction + "','" + STR_NEUTRAL + "',";
@@ -3466,9 +3466,9 @@ void manageOrder(string symbol, int orderMagicNumber) {
          }
 
 //--------- 1.03 --
-         //--- Japanese Candlestick Patterns - Strengthening            
+         //--- Japanese Candlestick Patterns - Strengthening
          int pattern = sqGetCandlePattern(OrderSymbol(), TimeFrame, 1);
-             
+
          if( pattern >= 0 )
          {
             if( pattern != PATTERN_UNDEFINED )
@@ -3484,9 +3484,9 @@ void manageOrder(string symbol, int orderMagicNumber) {
                   case PATTERN_BEARISH_SS4:
                   case PATTERN_BEARISH_S_E:
                      bearishCandle = true;
-                     break;                        
+                     break;
                }
-         
+
                //-- Bullish Patterns
                switch(pattern)
                {
@@ -3509,7 +3509,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
          trend_m15 = getTrend(OrderSymbol(),PERIOD_M15, soglie);
          trend_m30 = getTrend(OrderSymbol(),PERIOD_M30, soglie);
          trend_h1 = getTrend(OrderSymbol(),PERIOD_H1, soglie);
-      
+
          if(trend_m15 == TREND_CRESCENTE_FORTE && trend_m30 == TREND_CRESCENTE_FORTE && trend_h1 == TREND_CRESCENTE_FORTE) trend = TREND_CRESCENTE_FORTE;
          else if(trend_m15 == TREND_DECRESCENTE_FORTE && trend_m30 == TREND_DECRESCENTE_FORTE && trend_h1 == TREND_DECRESCENTE_FORTE) trend = TREND_DECRESCENTE_FORTE;
          else trend = TREND_LATERALE;
@@ -3527,13 +3527,13 @@ void manageOrder(string symbol, int orderMagicNumber) {
          }
 
          //--- Signal Type 'BB' - Confirmation
-         
+
            HideTestIndicators(true);
             bb_squeeze_green_0  = bb_squeeze_dark(OrderSymbol(), TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
                      //iCustom(OrderSymbol(), TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
             bb_squeeze_green_1  = bb_squeeze_dark(OrderSymbol(), TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
                      //iCustom(OrderSymbol(), TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
-            
+
             upTrendStop         = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
             downTrendStop       = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
             upTrendSignal       = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 2, 0);
@@ -3542,7 +3542,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
 
          //-- Check Time Opened and Profits
          int hoursSinceOpened = (TimeGMT() - dataTimeOpened)/3600;
-         
+
          if( (bearishCandle && hoursSinceOpened > (TimeFrame / 60)) && PointProfit >= (dataHighPoints + dataLowPoints)/4 )
          {
             if( bb_squeeze_green_0 == EMPTY_VALUE || bb_squeeze_green_0 != 0 || downTrendStop > 0 || downTrendSignal > 0 )
@@ -3554,7 +3554,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
             }
          }
 //--------- 1.03 --
-                     
+
          // SL/TP
          if(OrderStopLoss() == 0 || OrderTakeProfit() == 0)
          {
@@ -3562,16 +3562,16 @@ void manageOrder(string symbol, int orderMagicNumber) {
             //--
             get_NearestAndFarestSR(symbol, TimeFrame, MarketInfo(symbol,MODE_ASK));
             //--
-         
+
             double realSL = (OrderStopLoss() != 0 ? OrderStopLoss() : NormalizeDouble(nearest_support,MarketInfo(symbol,MODE_DIGITS)));
             double realPT = (OrderTakeProfit() != 0 ? OrderTakeProfit() : NormalizeDouble(farest_resistance,MarketInfo(symbol,MODE_DIGITS)));
-            
+
             if( realSL >= MarketInfo(symbol, MODE_BID) - MarketInfo(symbol, MODE_STOPLEVEL) * MarketInfo(symbol, MODE_POINT) || newSL <= OrderStopLoss())
             {
                get_NearestAndFarestSR(symbol, TimeFrame, nearest_support);
                realSL = NormalizeDouble(nearest_support,MarketInfo(symbol,MODE_DIGITS));
             }
-            
+
             if(sqIsTradeAllowed() == 1) {
                double distance_from_open_price = (realPT - OrderOpenPrice())*power;
                if ( distance_from_open_price < BreakEvenAtPips )
@@ -3579,7 +3579,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
                   realPT = OrderTakeProfit();
                }
                sqSetSLPTForOrder(OrderTicket(), realSL, realPT, orderMagicNumber, OrderType(), OrderOpenPrice(), symbol, 3, CloseAtError);
-            }            
+            }
          }
 
          // Trailing Stop
@@ -3614,11 +3614,11 @@ void manageOrder(string symbol, int orderMagicNumber) {
          }
 
          // Move Stop Loss to Break Even
-         
+
 //--------- 1.03 --
          //--Check the strengthness of the signal
          bool signalIsWeak = false;
-         
+
          if( bearishCandle )
          {
             signalIsWeak = true;
@@ -3627,60 +3627,60 @@ void manageOrder(string symbol, int orderMagicNumber) {
          {
             signalIsWeak = true;
          }
-         
+
                //-- Individual Strength and Weakness
                string curr1    = StringSubstr(OrderSymbol(),0,3);
                string curr2    = StringSubstr(OrderSymbol(),3,5);
-               
+
                double strength1 = 0;
                double strength2 = 0;
-               
+
                //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
                handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr1+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   strength1  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
                handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr2+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   strength2  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
          if(strength1 - strength2 >= 4 )
          {
             signalIsWeak = true;
          }
-               
+
          if(strength2 > 7 && strength1 < 3 )
          {
             signalIsWeak = true;
          }
-               
+
                //-- Daily Percent Rate Consistency
                double dailyPercentChange = 0;
-               
+
                //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
                handle = sqlite_query(db, "SELECT DailyPercentChange FROM 'HeatMap' WHERE Pair2 = '"+OrderSymbol()+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   dailyPercentChange  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
                //-- Daily Percent Range Concordance
                int dailyPercentChangeConcordanceCounter = 0;
                handle = sqlite_query(db, "SELECT distinct(DailyPercentChange),TimeFrame FROM 'HeatMap' WHERE Pair2 = '"+OrderSymbol()+"' AND TimeFrame <> "+TimeFrame+" ORDER BY id DESC", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   double dailyPercentChange2 = StringToDouble(sqlite_get_col(handle, 0));
-                  
+
                   if( dailyPercentChange > 0 && dailyPercentChange2 >= dailyPercentChange )
                   {
                      dailyPercentChangeConcordanceCounter += 1;
@@ -3692,7 +3692,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
          if( /*(h_asian_session_hours <= 1 || h_eu_session_hours <= 1) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange >= -HeatMapDailyPercRateTholdMax && dailyPercentChange <= -HeatMapDailyPercRateTholdMin )
          {
             signalIsWeak = true;
@@ -3718,7 +3718,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
             double   PercLost    = StringToDouble(sqlite_get_col(handle, 12));
             double   PercBuy     = StringToDouble(sqlite_get_col(handle, 13));
             double   PercSell    = StringToDouble(sqlite_get_col(handle, 14));
-            
+
             if( PercWon < PercSell )
             {
                signalIsWeak = true;
@@ -3753,7 +3753,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
                   }
                }
             }
-   
+
             // Exit After X Bars
             /*tempValue = getOrderExitAfterXBars(1000);
             if(tempValue > 0) {
@@ -3791,15 +3791,15 @@ void manageOrder(string symbol, int orderMagicNumber) {
             double distance_from_daily_pivot       = MathAbs((price - D_P)*power);
             double distance_from_daily_support     = (price - nearest_daily_support)*power;
             double distance_from_daily_resistance  = (nearest_daily_resistance - price)*power;
-            
+
             double order_tp                        = OrderTakeProfit();
             double distance_from_tp                = (order_tp - price)*power;
 
             double order_sl                        = OrderStopLoss();
             double distance_from_sl                = (price - order_sl)*power;
-            
+
             bool look_next  = true;
-            
+
             //--Moving toward TP (BUY)
             if (look_next && price < order_tp && distance_from_tp > 0 && distance_from_tp <= TrailingStopPips/2 && dataHighPoints_old > 0 && (dataHighPoints_old - PointProfit) > 0 && (dataHighPoints_old - PointProfit) <= dataHighPoints_old / 4 )
             {
@@ -3825,59 +3825,59 @@ void manageOrder(string symbol, int orderMagicNumber) {
                sqClosePositionAtMarket(OrderLots());
                look_next = false;
             }
-            
+
             double SR_Range   = (nearest_resistance - nearest_support)*power;
                    SR_Range   = (SR_Range != 0 ? SR_Range : 0.001);
             double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                    DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
-            
+
             //--Near/Far from the Pivot
             if( look_next && hoursSinceOpened > (TimeFrame / 60) && SR_Range >= TrailingStopPips )
             {
                double perc_dist_pivot = (distance_from_pivot*100)/SR_Range;
-               
+
                if( perc_dist_pivot >= 0 && perc_dist_pivot <= TrailingStopPips)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                //--Near/Far from a Support or Resistance
                double perc_dist_support    = (distance_from_support*100)/SR_Range;
                double perc_dist_resistance = (distance_from_resistance*100)/SR_Range;
-               
+
                if( look_next && perc_dist_support >= 0 && perc_dist_support <= 25)
                {
                   //sqClosePositionAtMarket(OrderLots());
                   //look_next = false;
                }
-               
+
                if( look_next && perc_dist_resistance >= 0 && perc_dist_resistance <= TrailingStopPips/2)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
             }
-            
+
             //--Near/Far from a Daily level
             if( look_next && hoursSinceOpened > (TimeFrame / 60) && DSR_Range >= TrailingStopPips )
             {
                double perc_dist_daily_pivot      = (distance_from_daily_pivot*100)/DSR_Range;
                double perc_dist_daily_support    = (distance_from_daily_support*100)/DSR_Range;
                double perc_dist_daily_resistance = (distance_from_daily_resistance*100)/DSR_Range;
-               
+
                if( perc_dist_daily_pivot >= 0 && perc_dist_daily_pivot <= TrailingStopPips)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                if( look_next && perc_dist_daily_support >= 0 && perc_dist_daily_support <= 10)
                {
                   //sqClosePositionAtMarket(OrderLots());
                   //look_next = false;
                }
-               
+
                if( look_next && perc_dist_daily_resistance >= 0 && perc_dist_daily_resistance <= TrailingStopPips/2)
                {
                   sqClosePositionAtMarket(OrderLots());
@@ -3895,7 +3895,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
          int Direction = (OrderType() == OP_BUY ? DIR_LONG : DIR_SHORT);
          int PointProfit = (OrderOpenPrice() - OrderClosePrice()) * power;
          double MoneyProfit = OrderProfit() + OrderCommission() + OrderSwap();
-         
+
 //--------- 1.03 --
          datetime dataTimeOpened = TimeGMT();
          int dataHighPoints = PointProfit;
@@ -3919,7 +3919,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
 
          if (handle > 0) sqlite_free_query(handle);
          handle = 0;
-         
+
          handle = sqlite_query(db, "SELECT TimeOpened, TimeFrame, High, Low, HighMoney, LowMoney, Hedge1, Hedge2, Hedge3, Hedge4, Hedge5, Hedge6, Hedge7, Hedge8 FROM Trades WHERE Ticket=" + OrderTicket() + " LIMIT 1", cols);
          if (sqlite_next_row(handle) > 0) {
             int ticket = OrderTicket();
@@ -3939,31 +3939,31 @@ void manageOrder(string symbol, int orderMagicNumber) {
             double dataHedge8    =   StrToDouble(sqlite_get_col(handle,13));
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            
+
             //-- Update Order Status
             dataHighPoints_old = dataHighPoints;
             dataLowPoints_old  = dataLowPoints;
             if (PointProfit > dataHighPoints) dataHighPoints = PointProfit;
             if (PointProfit < dataLowPoints)  dataLowPoints = PointProfit;
-      
+
             if (MoneyProfit > dataHighMoney) dataHighMoney = MoneyProfit;
             if (MoneyProfit < dataLowMoney) dataLowMoney = MoneyProfit;
-            
+
             string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
             StringReplace(timeTouched,".","-");
-            
+
             string sql = "UPDATE Trades SET TimeTouched='" + timeTouched + "', CountTouched=CountTouched+1, RecentPoints="+ PointProfit +", RecentMoney="+ MoneyProfit +", High=" + dataHighPoints + ", Low=" + dataLowPoints + ", HighMoney=" + dataHighMoney + ", LowMoney=" + dataLowMoney + " " ;
                    sql+= ", Hedge1=" + OrderOpenPrice() + ", Hedge2=" + OrderClosePrice() + ", Hedge3=" + OrderStopLoss() + ", Hedge4=" + OrderTakeProfit() + " ";
                    sql+= " WHERE Ticket=" + ticket + "";
             if (handle > 0) sqlite_free_query(handle);
             handle = 0;
-            do_exec(db, sql);      
+            do_exec(db, sql);
          }
          else
          {
             string timeTouched = TimeToString(TimeGMT(),TIME_DATE|TIME_MINUTES|TIME_SECONDS);
             StringReplace(timeTouched,".","-");
-            
+
             //-- 'Trades' --> 'Ticket', 'TimeFrame', 'Pair', 'Closed', 'SignalType', 'SignalPoints', 'Direction', 'Strength', 'Size', 'TimeOpened', 'TimeTouched', 'CountTouched', 'RecentPoints', 'RecentMoney', 'High', 'Low', 'HighMoney', 'LowMoney', 'Hedge1', 'Hedge2', 'Hedge3', 'Hedge4', 'Hedge5', 'Hedge6', 'Hedge7', 'Hedge8'
             string sql = "INSERT INTO 'Trades' ('Ticket','TimeFrame','Pair','Closed','SignalType','SignalPoints','Direction','Strength','Size','TimeOpened','TimeTouched','CountTouched', 'RecentPoints', 'RecentMoney', 'High','Low','HighMoney','LowMoney','Hedge1','Hedge2','Hedge3','Hedge4') VALUES (";
                    sql+= "'" + OrderTicket() + "','" + TimeFrame + "','" + OrderSymbol() + "','0','UNKNOWN','0','" + Direction + "','" + STR_NEUTRAL + "',";
@@ -3976,9 +3976,9 @@ void manageOrder(string symbol, int orderMagicNumber) {
          }
 
 //--------- 1.03 --
-         //--- Japanese Candlestick Patterns - Strengthening            
+         //--- Japanese Candlestick Patterns - Strengthening
          int pattern = sqGetCandlePattern(OrderSymbol(), TimeFrame, 1);
-             
+
          if( pattern >= 0 )
          {
             if( pattern != PATTERN_UNDEFINED )
@@ -3994,9 +3994,9 @@ void manageOrder(string symbol, int orderMagicNumber) {
                   case PATTERN_BEARISH_SS4:
                   case PATTERN_BEARISH_S_E:
                      bearishCandle = true;
-                     break;                        
+                     break;
                }
-         
+
                //-- Bullish Patterns
                switch(pattern)
                {
@@ -4019,7 +4019,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
          trend_m15 = getTrend(OrderSymbol(),PERIOD_M15, soglie);
          trend_m30 = getTrend(OrderSymbol(),PERIOD_M30, soglie);
          trend_h1 = getTrend(OrderSymbol(),PERIOD_H1, soglie);
-      
+
          if(trend_m15 == TREND_CRESCENTE_FORTE && trend_m30 == TREND_CRESCENTE_FORTE && trend_h1 == TREND_CRESCENTE_FORTE) trend = TREND_CRESCENTE_FORTE;
          else if(trend_m15 == TREND_DECRESCENTE_FORTE && trend_m30 == TREND_DECRESCENTE_FORTE && trend_h1 == TREND_DECRESCENTE_FORTE) trend = TREND_DECRESCENTE_FORTE;
          else trend = TREND_LATERALE;
@@ -4037,13 +4037,13 @@ void manageOrder(string symbol, int orderMagicNumber) {
          }
 
          //--- Signal Type 'BB' - Confirmation
-         
+
            HideTestIndicators(true);
             bb_squeeze_green_0  = bb_squeeze_dark(OrderSymbol(), TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
                      //iCustom(OrderSymbol(), TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 0);
             bb_squeeze_green_1  = bb_squeeze_dark(OrderSymbol(), TimeFrame, bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
                      //iCustom(OrderSymbol(), TimeFrame, "bbsqueeze_dark", bolPrd, bolDev, keltPrd, keltFactor, momPrd, Length, Nbars, 5, 1);
-            
+
             upTrendStop         = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 0, 0);
             downTrendStop       = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 1, 0);
             upTrendSignal       = doda_bands2(OrderSymbol(), TimeFrame, "Doda-Bands2", Length, Deviation, MoneyRisk, Signal, Line, Nbars, FALSE, 2, 0);
@@ -4052,7 +4052,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
 
          //-- Check Time Opened and Profits
          int hoursSinceOpened = (TimeGMT() - dataTimeOpened)/3600;
-         
+
          if( (bullishCandle && hoursSinceOpened > (TimeFrame / 60)) && PointProfit >= (dataHighPoints + dataLowPoints)/4 )
          {
             if( bb_squeeze_green_0 == EMPTY_VALUE || bb_squeeze_green_0 != 0 || upTrendStop > 0 || upTrendSignal > 0 )
@@ -4072,10 +4072,10 @@ void manageOrder(string symbol, int orderMagicNumber) {
             //--
             get_NearestAndFarestSR(symbol, TimeFrame, MarketInfo(symbol,MODE_BID));
             //--
-         
+
             double realSL = (OrderStopLoss() != 0 ? OrderStopLoss() : NormalizeDouble(nearest_resistance,MarketInfo(symbol,MODE_DIGITS)));
             double realPT = (OrderTakeProfit() != 0 ? OrderTakeProfit() : NormalizeDouble(farest_support,MarketInfo(symbol,MODE_DIGITS)));
-            
+
             if( realSL <= MarketInfo(symbol, MODE_ASK) + MarketInfo(symbol, MODE_STOPLEVEL) * MarketInfo(symbol, MODE_POINT) || (OrderStopLoss() > 0 && newSL >= OrderStopLoss()))
             {
                get_NearestAndFarestSR(symbol, TimeFrame, nearest_resistance);
@@ -4127,7 +4127,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
 //--------- 1.03 --
          //--Check the strengthness of the signal
          bool signalIsWeak = false;
-         
+
          if( bullishCandle )
          {
             signalIsWeak = true;
@@ -4136,60 +4136,60 @@ void manageOrder(string symbol, int orderMagicNumber) {
          {
             signalIsWeak = true;
          }
-         
+
                //-- Individual Strength and Weakness
                string curr1    = StringSubstr(OrderSymbol(),0,3);
                string curr2    = StringSubstr(OrderSymbol(),3,5);
-               
+
                double strength1 = 0;
                double strength2 = 0;
-               
+
                //-- 'TotalStrength' --> 'Time', 'TimeFrame', 'Currency', 'Strength'
                handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr1+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   strength1  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
                handle = sqlite_query(db, "SELECT Strength FROM 'TotalStrength' WHERE Currency = '"+curr2+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   strength2  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
          if( strength1 > 7 && strength2 < 3 )
          {
             signalIsWeak = true;
          }
-               
+
          if( strength2 - strength1 >= 4  )
          {
             signalIsWeak = true;
          }
-               
+
                //-- Daily Percent Rate Consistency
                double dailyPercentChange = 0;
-               
+
                //-- 'HeatMap' --> 'Time', 'TimeFrame', 'Pair1', 'Pair2', 'AvgCorrelation', 'DailyPercentChange'
                handle = sqlite_query(db, "SELECT DailyPercentChange FROM 'HeatMap' WHERE Pair2 = '"+OrderSymbol()+"' AND TimeFrame = "+TimeFrame+" ORDER BY id DESC LIMIT 1", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   dailyPercentChange  = StringToDouble(sqlite_get_col(handle, 0));
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
                //-- Daily Percent Range Concordance
                int dailyPercentChangeConcordanceCounter = 0;
                handle = sqlite_query(db, "SELECT distinct(DailyPercentChange),TimeFrame FROM 'HeatMap' WHERE Pair2 = '"+OrderSymbol()+"' AND TimeFrame <> "+TimeFrame+" ORDER BY id DESC", cols);
-               while(sqlite_next_row(handle) > 0) 
+               while(sqlite_next_row(handle) > 0)
                {
                   double dailyPercentChange2 = StringToDouble(sqlite_get_col(handle, 0));
-                  
+
                   if( dailyPercentChange > 0 && dailyPercentChange2 >= dailyPercentChange )
                   {
                      dailyPercentChangeConcordanceCounter += 1;
@@ -4201,7 +4201,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
                }
                if (handle > 0) sqlite_free_query(handle);
                handle = 0;
-               
+
          if( /*(h_asian_session_hours <= 1 || h_eu_session_hours <= 1) &&*/ dailyPercentChangeConcordanceCounter > 1 && dailyPercentChange <= HeatMapDailyPercRateTholdMax && dailyPercentChange >= HeatMapDailyPercRateTholdMin )
          {
             signalIsWeak = true;
@@ -4232,7 +4232,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
                   }
                }
             }
-   
+
             // Exit After X Bars
             /*tempValue = getOrderExitAfterXBars(2000);
             if(tempValue > 0) {
@@ -4243,7 +4243,7 @@ void manageOrder(string symbol, int orderMagicNumber) {
             }*/
          }
 //--------- 1.03 --
-         
+
          //--
          double price = OrderClosePrice();
          double profit = OrderProfit() + OrderCommission() + OrderSwap();
@@ -4276,9 +4276,9 @@ void manageOrder(string symbol, int orderMagicNumber) {
 
             double order_sl                        = OrderStopLoss();
             double distance_from_sl                = (order_sl - price)*power;
-            
+
             bool look_next  = true;
-            
+
             //--Moving toward TP(SELL)
             if (look_next && price > order_tp && distance_from_tp > 0 && distance_from_tp <= TrailingStopPips/2 && dataHighPoints_old > 0 && (dataHighPoints_old - PointProfit) > 0 && (dataHighPoints_old - PointProfit) <= dataHighPoints_old / 4 )
             {
@@ -4304,59 +4304,59 @@ void manageOrder(string symbol, int orderMagicNumber) {
                sqClosePositionAtMarket(OrderLots());
                look_next = false;
             }
-            
+
             double SR_Range   = (nearest_resistance - nearest_support)*power;
                    SR_Range   = (SR_Range != 0 ? SR_Range : 0.001);
             double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                    DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
-            
+
             //--Near/Far from the Pivot
             if( look_next && hoursSinceOpened > (TimeFrame / 60) && SR_Range >= TrailingStopPips )
             {
                double perc_dist_pivot = (distance_from_pivot*100)/SR_Range;
-               
+
                if( look_next && perc_dist_pivot >= 0 && perc_dist_pivot <= TrailingStopPips)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                //--Near/Far from a Support or Resistance
                double perc_dist_support    = (distance_from_support*100)/SR_Range;
                double perc_dist_resistance = (distance_from_resistance*100)/SR_Range;
-               
+
                if( look_next && perc_dist_support >= 0 && perc_dist_support <= TrailingStopPips/2)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                if( look_next && perc_dist_resistance >= 0 && perc_dist_resistance <= 25)
                {
                   //sqClosePositionAtMarket(OrderLots());
                   //look_next = false;
                }
             }
-            
+
             //--Near/Far from a Daily level
             if( look_next && hoursSinceOpened > (TimeFrame / 60) && DSR_Range >= TrailingStopPips )
             {
                double perc_dist_daily_pivot      = (distance_from_daily_pivot*100)/DSR_Range;
                double perc_dist_daily_support    = (distance_from_daily_support*100)/DSR_Range;
                double perc_dist_daily_resistance = (distance_from_daily_resistance*100)/DSR_Range;
-               
+
                if( look_next && perc_dist_daily_pivot >= 0 && perc_dist_daily_pivot <= TrailingStopPips)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                if( look_next && perc_dist_daily_support >= 0 && perc_dist_daily_support <= TrailingStopPips/2)
                {
                   sqClosePositionAtMarket(OrderLots());
                   look_next = false;
                }
-               
+
                if( look_next && perc_dist_daily_resistance >= 0 && perc_dist_daily_resistance <= 10)
                {
                   //sqClosePositionAtMarket(OrderLots());
@@ -4420,7 +4420,7 @@ void manageOrderExpiration(string symbol, int orderMagicNumber) {
 
 /**
  * Bearish
- *   SS 2,3,4  - Shooting Star 
+ *   SS 2,3,4  - Shooting Star
  *   E_Star    - Evening Star
  *   E_Doji    - Evening Doji Star
  *   DCC       - Dark Cloud Pattern
@@ -4452,13 +4452,13 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
    double Doji_MinLength = 0;
    double Star_MinLength = 0;
 
-   double Piercing_Line_Ratio = 0;      
-   int Piercing_Candle_Length = 0;  
+   double Piercing_Line_Ratio = 0;
+   int Piercing_Candle_Length = 0;
    int Engulfing_Length = 0;
    int Star_Body_Length = 5;
    double Candle_WickBody_Percent = 0;
-   int CandleLength = 0;  
-      
+   int CandleLength = 0;
+
    switch (time_frame) {
       case 1:
          Doji_Star_Ratio = 0;
@@ -4466,7 +4466,7 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
          Piercing_Candle_Length = 10;
          Engulfing_Length = 10;
          Candle_WickBody_Percent = 0.9;
-         CandleLength = 12;  
+         CandleLength = 12;
 
          break;
       case 5:
@@ -4495,7 +4495,7 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
          Candle_WickBody_Percent = 0.9;
          CandleLength = 12;
 
-         break;      
+         break;
       case 60:
          Doji_Star_Ratio = 0;
          Piercing_Line_Ratio = 0.5;
@@ -4563,8 +4563,8 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
       shift2 = shift + 2;
       shift3 = shift + 3;
       shift4 = shift + 4;
-      
-      
+
+
       O = RatesBar[shift1].open;
       O1 = RatesBar[shift2].open;
       O2 = RatesBar[shift3].open;
@@ -4594,10 +4594,10 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
       LW = BodyLow-RatesBar[shift1].low;
       BLa = MathAbs(BL);
       BL90 = BLa*Candle_WickBody_Percent;
-            
-         
- // Bearish Patterns  
- 
+
+
+ // Bearish Patterns
+
       // Check for Bearish Shooting ShootStar
       if ((H>=H1)&&(H>H2)&&(H>H3))  {
          if (((UW/2)>LW)&&(UW>(2*BL90))&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((UW/3)<=LW)&&((UW/4)<=LW)/*&&(L>L1)&&(L>L2)*/)
@@ -4605,7 +4605,7 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
             return(PATTERN_BEARISH_SS2);
          }
       }
-      
+
       // Check for Bearish Shooting ShootStar
       if ((H>=H1)&&(H>H2)&&(H>H3))  {
          if (((UW/3)>LW)&&(UW>(2*BL90))&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((UW/4)<=LW)/*&&(L>L1)&&(L>L2)*/)
@@ -4613,7 +4613,7 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
             return(PATTERN_BEARISH_SS3);
          }
       }
-      
+
       // Check for Bearish Shooting ShootStar
       if ((H>=H1)&&(H>H2)&&(H>H3))  {
          if (((UW/4)>LW)&&(UW>(2*BL90))&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)/*&&(L>L1)&&(L>L2)*/)
@@ -4621,100 +4621,100 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
             return(PATTERN_BEARISH_SS4);
          }
       }
-      
+
       // Check for Evening Star pattern
       if ((H>=H1)&&(H1>H2)&&(H1>H3))  {
          if (/*(L>O1)&&*/(BLa<(Star_Body_Length*MarketInfo(pair,MODE_POINT)))&&(C2>O2)&&(!O==C)&&((C2-O2)/(0.001+H2-L2)>Doji_Star_Ratio)/*&&(C2<O1)*/&&(C1>O1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(O>C)&&(CL>=(Star_MinLength*MarketInfo(pair,MODE_POINT))))
          {
             return(PATTERN_BEARISH_E_STAR);
          }
-      }  
-      
+      }
+
       // Check for Evening Doji Star pattern
       if ((H>=H1)&&(H1>H2)&&(H1>H3))  {
-         if (/*(L>O1)&&*/(O==C)&&((C2>O2)&&(C2-O2)/(0.001+H2-L2)>Doji_Star_Ratio)/*&&(C2<O1)*/&&(C1>O1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(CL>=(Doji_MinLength*MarketInfo(pair,MODE_POINT)))) 
+         if (/*(L>O1)&&*/(O==C)&&((C2>O2)&&(C2-O2)/(0.001+H2-L2)>Doji_Star_Ratio)/*&&(C2<O1)*/&&(C1>O1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(CL>=(Doji_MinLength*MarketInfo(pair,MODE_POINT))))
          {
             return(PATTERN_BEARISH_E_DOJI);
          }
-      } 
-      
+      }
+
       // Check for a Dark Cloud Cover pattern
-      if ((C1>O1)&&(((C1+O1)/2)>C)&&(O>C)/*&&(O>C1)*/&&(C>O1)&&((O-C)/(0.001+(H-L))>Piercing_Line_Ratio)&&((CL>=Piercing_Candle_Length*MarketInfo(pair,MODE_POINT)))) 
+      if ((C1>O1)&&(((C1+O1)/2)>C)&&(O>C)/*&&(O>C1)*/&&(C>O1)&&((O-C)/(0.001+(H-L))>Piercing_Line_Ratio)&&((CL>=Piercing_Candle_Length*MarketInfo(pair,MODE_POINT))))
       {
          return(PATTERN_BEARISH_DCC);
       }
 
       // Check for Bearish Engulfing pattern
-      if ((C1>O1)&&(O>C)&&(O>=C1)&&(O1>=C)&&((O-C)>(C1-O1))&&(CL>=(Engulfing_Length*MarketInfo(pair,MODE_POINT)))) 
+      if ((C1>O1)&&(O>C)&&(O>=C1)&&(O1>=C)&&((O-C)>(C1-O1))&&(CL>=(Engulfing_Length*MarketInfo(pair,MODE_POINT))))
       {
          return(PATTERN_BEARISH_S_E);
       }
- 
+
  // End of Bearish Patterns
-   
+
  // Bullish Patterns
-   
-      // Check for Bullish Hammer   
+
+      // Check for Bullish Hammer
       if ((L<=L1)&&(L<L2)&&(L<L3))  {
-         if (((LW/2)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((LW/3)<=UW)&&((LW/4)<=UW)/*&&(H<H1)&&(H<H2)*/)  
+         if (((LW/2)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((LW/3)<=UW)&&((LW/4)<=UW)/*&&(H<H1)&&(H<H2)*/)
          {
             return(PATTERN_BULLISH_HMR2);
          }
       }
-      
-      // Check for Bullish Hammer   
+
+      // Check for Bullish Hammer
       if ((L<=L1)&&(L<L2)&&(L<L3))  {
-         if (((LW/3)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((LW/4)<=UW)/*&&(H<H1)&&(H<H2)*/)  
+         if (((LW/3)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)&&((LW/4)<=UW)/*&&(H<H1)&&(H<H2)*/)
          {
             return(PATTERN_BULLISH_HMR3);
          }
       }
-      
-      // Check for Bullish Hammer   
+
+      // Check for Bullish Hammer
       if ((L<=L1)&&(L<L2)&&(L<L3))  {
-         if (((LW/4)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)/*&&(H<H1)&&(H<H2)*/)  
+         if (((LW/4)>UW)&&(LW>BL90)&&(CL>=(CandleLength*MarketInfo(pair,MODE_POINT)))&&(O!=C)/*&&(H<H1)&&(H<H2)*/)
          {
             return(PATTERN_BULLISH_HMR4);
          }
-      }      
+      }
 
      // Check for Morning Star
-      
+
       if ((L<=L1)&&(L1<L2)&&(L1<L3))  {
-         if (/*(H1<(BL/2))&&*/(BLa<(Star_Body_Length*MarketInfo(pair,MODE_POINT)))&&(!O==C)&&((O2>C2)&&((O2-C2)/(0.001+H2-L2)>Doji_Star_Ratio))/*&&(C2>O1)*/&&(O1>C1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(C>O)&&(CL>=(Star_MinLength*MarketInfo(pair,MODE_POINT)))) 
+         if (/*(H1<(BL/2))&&*/(BLa<(Star_Body_Length*MarketInfo(pair,MODE_POINT)))&&(!O==C)&&((O2>C2)&&((O2-C2)/(0.001+H2-L2)>Doji_Star_Ratio))/*&&(C2>O1)*/&&(O1>C1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(C>O)&&(CL>=(Star_MinLength*MarketInfo(pair,MODE_POINT))))
          {
             return(PATTERN_BULLISH_M_STAR);
          }
       }
 
       // Check for Morning Doji Star
-      
+
       if ((L<=L1)&&(L1<L2)&&(L1<L3))  {
          if (/*(H1<(BL/2))&&*/(O==C)&&((O2>C2)&&((O2-C2)/(0.001+H2-L2)>Doji_Star_Ratio))/*&&(C2>O1)*/&&(O1>C1)/*&&((H1-L1)>(3*(C1-O1)))*/&&(CL>=(Doji_MinLength*MarketInfo(pair,MODE_POINT))))
          {
             return(PATTERN_BULLISH_M_DOJI);
          }
       }
-      
+
       // Check for Piercing Line pattern
-      
-      if ((C1<O1)&&(((O1+C1)/2)<C)&&(O<C)/*&&(O<C1)*//*&&(C<O1)*/&&((C-O)/(0.001+(H-L))>Piercing_Line_Ratio)&&(CL>=(Piercing_Candle_Length*MarketInfo(pair,MODE_POINT)))) 
+
+      if ((C1<O1)&&(((O1+C1)/2)<C)&&(O<C)/*&&(O<C1)*//*&&(C<O1)*/&&((C-O)/(0.001+(H-L))>Piercing_Line_Ratio)&&(CL>=(Piercing_Candle_Length*MarketInfo(pair,MODE_POINT))))
       {
          return(PATTERN_BULLISH_P_L);
-      }   
+      }
 
       // Check for Bullish Engulfing pattern
-      
-      if ((O1>C1)&&(C>O)&&(C>=O1)&&(C1>=O)&&((C-O)>(O1-C1))&&(CL>=(Engulfing_Length*MarketInfo(pair,MODE_POINT)))) 
+
+      if ((O1>C1)&&(C>O)&&(C>=O1)&&(C1>=O)&&((C-O)>(O1-C1))&&(CL>=(Engulfing_Length*MarketInfo(pair,MODE_POINT))))
       {
          return(PATTERN_BULLISH_L_E);
       }
-      
+
  // End of Bullish Patterns
- 
+
       return(PATTERN_UNDEFINED);
    }
-   
+
   //-- ERROR
    return(-1);
 }
@@ -4732,10 +4732,10 @@ int sqGetCandlePattern(string pair, int time_frame, int shift)
 double getOrderPrice(string symbol, int orderMagicNumber) {
    double price = 0;
 
-   if(orderMagicNumber == 1000) {   
+   if(orderMagicNumber == 1000) {
       price = MarketInfo(symbol, MODE_ASK);
    }
-   if(orderMagicNumber == 2000) { 
+   if(orderMagicNumber == 2000) {
       price = MarketInfo(symbol, MODE_BID);
    }
 
@@ -4766,7 +4766,7 @@ double getOrderTrailingStop(string symbol, int timeFrame, int orderMagicNumber, 
    double price = (orderType == OP_BUY ? MarketInfo(symbol,MODE_ASK) : MarketInfo(symbol,MODE_BID));
    get_NearestAndFarestSR(symbol, timeFrame, price);
    //--
-   
+
    if(orderMagicNumber == 1000) {
       double trailingStop_value = ( TrailingStopPips * getPointCoef(symbol, orderMagicNumber));
       if(trailingStop_value > 0) {
@@ -4776,9 +4776,9 @@ double getOrderTrailingStop(string symbol, int timeFrame, int orderMagicNumber, 
             trailingStop_value = MarketInfo(symbol, MODE_ASK) + trailingStop_value;
          }
       }
-      
+
       double nearestSR_value = MathMin(nearest_support, nearest_daily_support) - (MarketInfo(symbol,MODE_STOPLEVEL)*MarketInfo(symbol,MODE_POINT));
-      
+
       value = MathMax(trailingStop_value, nearestSR_value);
    }
 
@@ -4791,9 +4791,9 @@ double getOrderTrailingStop(string symbol, int timeFrame, int orderMagicNumber, 
             trailingStop_value = MarketInfo(symbol, MODE_ASK) + trailingStop_value;
          }
       }
-      
+
       double nearestSR_value = MathMax(nearest_resistance, nearest_daily_resistance) + (MarketInfo(symbol,MODE_STOPLEVEL)*MarketInfo(symbol,MODE_POINT));
-      
+
       value = MathMin(trailingStop_value, nearestSR_value);
    }
 
@@ -4984,7 +4984,7 @@ double getOrderProfitTarget(string symbol, int orderMagicNumber, int orderType, 
 double getPointCoef(string symbol, int orderMagicNumber) {
    double coef = 0;
    double rDigits, pointPow;
-   
+
    if(orderMagicNumber == 1000) {
       rDigits = MarketInfo(symbol, MODE_DIGITS);
       if(rDigits > 0 && rDigits != 2 && rDigits != 4) {
@@ -4992,7 +4992,7 @@ double getPointCoef(string symbol, int orderMagicNumber) {
       }
 
       pointPow = MathPow(10, rDigits);
-      coef = 1/pointPow;      
+      coef = 1/pointPow;
    }
    if(orderMagicNumber == 2000) {
       rDigits = MarketInfo(symbol, MODE_DIGITS);
@@ -5001,7 +5001,7 @@ double getPointCoef(string symbol, int orderMagicNumber) {
       }
 
       pointPow = MathPow(10, rDigits);
-      coef = 1/pointPow;      
+      coef = 1/pointPow;
    }
 
    return(coef);
@@ -5328,7 +5328,7 @@ string sqGetPeriodAsStr() {
 
 string sqGetTimeFrameAsStr(int time_frame) {
    string str = "";
-   
+
    switch( time_frame )
    {
       case PERIOD_M1:
@@ -5639,7 +5639,7 @@ int sqIsTradeAllowed(int MaxWaiting_sec = 30) {
         //Print("Trade context is free!");
         return(1);
     }
-    
+
     return(1);
 }
 
@@ -5654,8 +5654,8 @@ int sqOpenOrderWithErrorHandling(string symbol, int orderType, double orderLots,
    if(SupportECNBrokers) {
       sl = 0;
       pt = 0;
-   } 
-   
+   }
+
    ticket = OrderSend(symbol, orderType, orderLots, price, MaxSlippage, sl, pt, comment, orderMagicNumber);
 
    if(ticket < 0) {
@@ -5666,7 +5666,7 @@ int sqOpenOrderWithErrorHandling(string symbol, int orderType, double orderLots,
    }
 
    tmpRet = OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES);
-         
+
    Log("Order opened with ticket: ", OrderTicket(), " at price:", OrderOpenPrice());
    VerboseLog("Order with Magic Number: ",orderMagicNumber," opened with ticket: ", OrderTicket(), " at price:", OrderOpenPrice());
 
@@ -5678,7 +5678,7 @@ int sqOpenOrderWithErrorHandling(string symbol, int orderType, double orderLots,
       while(true) {
          retries--;
          if(retries < 0) return(0);
-         
+
          if((realSL == 0 && realPT == 0) || (OrderStopLoss() == realSL && OrderTakeProfit() == realPT)) {
             return(ticket);
          }
@@ -5708,7 +5708,7 @@ int sqOpenOrderWithErrorHandling(string symbol, int orderType, double orderLots,
 
 bool sqSetSLPTForOrder(int ticket, double realSL, double realPT, int orderMagicNumber, int orderType, double price, string symbol, int retries, bool closeAtError) {
    Verbose("Setting SL: ", realSL, " and PT: ", realPT, " for order with ticket ", ticket);
-   
+
    if( OrderSelect(ticket,SELECT_BY_TICKET,MODE_TRADES) )
    {
       if(OrderModify(ticket, OrderOpenPrice(), realSL, realPT, 0, 0)) {
@@ -5719,7 +5719,7 @@ bool sqSetSLPTForOrder(int ticket, double realSL, double realPT, int orderMagicN
          VerboseLog("Error modifying order with ticket("+ticket+") - error #",error, " : ", ErrorDescription(error));
          VerboseLog("Order Details - Type: "+sqGetOrderTypeAsString(OrderType())+", OpenPrice: "+OrderOpenPrice()+", SL: "+OrderStopLoss()+", TP: "+OrderTakeProfit());
          VerboseLog("Order Modify Bid: "+MarketInfo(symbol, MODE_BID)+", Ask: "+MarketInfo(symbol, MODE_ASK)+", NewSL: "+realSL+", NewTP: "+realPT);
-   
+
          if(retries == 0 && closeAtError) {
             // when it is last unsuccessful retry, it tries to close the order
             RefreshRates();
@@ -5728,10 +5728,10 @@ bool sqSetSLPTForOrder(int ticket, double realSL, double realPT, int orderMagicN
          }
          return(false);
       }
-      
+
       return(true);
    }
-   
+
    return(false);
 }
 
@@ -5802,7 +5802,7 @@ bool sqOpenOrder(string symbol, int orderType, double orderLots, double price, d
       return(false);
       Verbose("There was error placing order less that a minute ago, waiting with another order!");
    }
-   
+
    if(sqLiveOrderExists(symbol, orderMagicNumber)) {
       Verbose("Order with magic number: ", orderMagicNumber, " already exists, cannot open another one!");
       Verbose("----------------------------------");
@@ -5852,7 +5852,7 @@ bool sqOpenOrder(string symbol, int orderType, double orderLots, double price, d
             Verbose("Trade successfuly opened", " ----------------");
             ObjectSetText("lines", "Last Signal: "+ruleName, 8, "Tahoma", White);
             OrderSelect(ticket, SELECT_BY_TICKET, MODE_TRADES);
-            
+
             return(true);
          }
       }
@@ -5867,17 +5867,17 @@ bool sqOpenOrder(string symbol, int orderType, double orderLots, double price, d
          Verbose("Invalid volume, cannot open the trade", " ----------------");
          return(false);
       }
-      
+
       if(ticket == -11111) {
          Verbose("Trade opened, but cannot set SL/PT, closing trade", " ----------------");
          return(false);
       }
-      
+
       Sleep(1000);
    }
 
    Verbose("Retries of opening order finished", " ----------------");
-   return(false);   
+   return(false);
 }
 
 //+------------------------------------------------------------------+
@@ -5909,17 +5909,17 @@ double sqMMFixedRisk(string symbol, int orderMagicNumber, int orderType) {
       {
          double stepValue = ((AccountBalance()-LotStepFrom)/LotStepEvery)*LotStepValue ;
          double lotStepValue = NormalizeDouble( ( stepValue - MathMod(stepValue, LotStepValue) ) , LotsDecimals );
-         
+
          LOT += lotStepValue;
       }
-            
+
       return(LOT);
    }
 
    double _riskInPercent = RiskInPercent;
    double _lotsDecimals = LotsDecimals;
    double _maximumLots = MaximumLots;
-   
+
    if(_riskInPercent <= 0) {
       Verbose("Computing Money Management - Risk In Percent is zero, using Lots if no MM: ", LotsIfNoMM);
 
@@ -5928,13 +5928,13 @@ double sqMMFixedRisk(string symbol, int orderMagicNumber, int orderType) {
       {
          double stepValue = ((AccountBalance()-LotStepFrom)/LotStepEvery)*LotStepValue ;
          double lotStepValue = NormalizeDouble( ( stepValue - MathMod(stepValue, LotStepValue) ) , LotsDecimals );
-         
+
          LOT += lotStepValue;
       }
-            
+
       return(LOT);
    }
-   
+
    string _baseCurrency = StringSubstr(symbol,0,3) + "USD" + PairSuffix;
    /*double _exchRate = (MarketInfo(_baseCurrency, MODE_BID) != EMPTY_VALUE && MarketInfo(_baseCurrency, MODE_BID) != 0
                         ? (1/MarketInfo(_baseCurrency, MODE_BID)) : BaseCurrencyExChgUSD);*/
@@ -5978,7 +5978,7 @@ double sqMMFixedRisk(string symbol, int orderMagicNumber, int orderType) {
    }
 
    lotMM = NormalizeDouble( lotMM, _lotsDecimals);
-   
+
    if(MarketInfo(symbol, MODE_LOTSIZE)==10000.0) lotMM=lotMM*10;
    lotMM=NormalizeDouble(lotMM,_lotsDecimals);
 
@@ -5989,7 +5989,7 @@ double sqMMFixedRisk(string symbol, int orderMagicNumber, int orderType) {
    {
       double stepValue = ((AccountBalance()-LotStepFrom)/LotStepEvery)*LotStepValue ;
       double lotStepValue = NormalizeDouble( ( stepValue - MathMod(stepValue, LotStepValue) ) , LotsDecimals );
-      
+
       lotMM += lotStepValue;
    }
 
@@ -6057,59 +6057,59 @@ double i_TSRLine(string sig_currency, int sig_timeFrame, string indexLabel, int 
 
    MqlRates RatesBarTSR[];
    ArraySetAsSeries(RatesBarTSR,true);
-   
-   //---- buffers 
+
+   //---- buffers
    double Uptrend[];
    double Dntrend[];
-   double ExtMapBuffer[]; 
-   
+   double ExtMapBuffer[];
+
    ArrayResize(Uptrend, Nbars);
    ArraySetAsSeries(Uptrend, true);
    ArrayResize(Dntrend, Nbars);
    ArraySetAsSeries(Dntrend, true);
    ArrayResize(ExtMapBuffer, Nbars);
    ArraySetAsSeries(ExtMapBuffer, true);
-   
+
    if( signalCounter == 0 && CopyRates(sig_currency,sig_timeFrame,0,Nbars+period,RatesBarTSR)==Nbars+period )
    {
-      int x = 0; 
-      int p = MathSqrt(2*period);              
+      int x = 0;
+      int p = MathSqrt(2*period);
       int e = Nbars;
-      
+
       double vect[], trend[];
-   
+
       ArrayResize(vect, e);
       ArraySetAsSeries(vect, true);
       ArrayResize(trend, e);
       ArraySetAsSeries(trend, true);
-      
-      for(x = 0; x < e; x++) 
-      { 
+
+      for(x = 0; x < e; x++)
+      {
          //vect[x] = 2*WMA(Pair, TimeFrame, x, period/2, method, price) - WMA(Pair, TimeFrame, x, period, method, price);
          vect[x] = 2*iMA(sig_currency,sig_timeFrame, period, 0, method, price, x) - iMA(sig_currency,sig_timeFrame, 2*period, 0, method, price, x);
       }
-      
-      for(x = 0; x < e; x++) ExtMapBuffer[x] = iMAOnArray(vect, 0, p, 0, method, x);        
-      
+
+      for(x = 0; x < e; x++) ExtMapBuffer[x] = iMAOnArray(vect, 0, p, 0, method, x);
+
       for(x = e-2; x >= 0; x--)
-      {     
+      {
          trend[x] = trend[x+1];
          if (ExtMapBuffer[x]> ExtMapBuffer[x+1]) trend[x] =1;
          if (ExtMapBuffer[x]< ExtMapBuffer[x+1]) trend[x] =-1;
-      
+
          if (trend[x]>0)
          {
-            Uptrend[x] = ExtMapBuffer[x]; 
+            Uptrend[x] = ExtMapBuffer[x];
             if (trend[x+1]<0) Uptrend[x+1]=ExtMapBuffer[x+1];
             Dntrend[x] = EMPTY_VALUE;
          }
          else if (trend[x]<0)
          {
-            Dntrend[x] = ExtMapBuffer[x]; 
+            Dntrend[x] = ExtMapBuffer[x];
             if (trend[x+1]>0) Dntrend[x+1]=ExtMapBuffer[x+1];
             Uptrend[x] = EMPTY_VALUE;
          }
-      
+
       }
    }
 
@@ -6141,7 +6141,7 @@ double i_hama(string sig_currency, int sig_timeFrame, string indexLabel, int ind
    ArrayResize(ExtMapBuffer2, Nbars);
    ArrayResize(ExtMapBuffer3, Nbars);
    ArrayResize(ExtMapBuffer4, Nbars);
-      
+
    ArrayInitialize(ExtMapBuffer1, EMPTY_VALUE);
    ArrayInitialize(ExtMapBuffer2, EMPTY_VALUE);
    ArrayInitialize(ExtMapBuffer3, EMPTY_VALUE);
@@ -6162,16 +6162,16 @@ double i_hama(string sig_currency, int sig_timeFrame, string indexLabel, int ind
       haClose=(maOpen+maHigh+maLow+maClose)/4;
       haHigh=MathMax(maHigh, MathMax(haOpen, haClose));
       haLow=MathMin(maLow, MathMin(haOpen, haClose));
-      if (haOpen<haClose) 
+      if (haOpen<haClose)
         {
          ExtMapBuffer1[pos]=haLow;
          ExtMapBuffer2[pos]=haHigh;
-        } 
+        }
       else
         {
          ExtMapBuffer1[pos]=haHigh;
          ExtMapBuffer2[pos]=haLow;
-        } 
+        }
       ExtMapBuffer3[pos]=haOpen;
       ExtMapBuffer4[pos]=haClose;
  	   pos--;
@@ -6202,7 +6202,7 @@ double doda_bands2(string sig_currency, int sig_timeFrame, string indexLabel, in
    double a_ibuf_136[];
    double a_ibuf_140[];
    double a_ibuf_144[];
-   
+
    ArrayResize(a_ibuf_124, Nbars);
    ArrayResize(a_ibuf_128, Nbars);
    ArrayResize(a_ibuf_132, Nbars);
@@ -6216,7 +6216,7 @@ double doda_bands2(string sig_currency, int sig_timeFrame, string indexLabel, in
    ArrayInitialize(a_ibuf_136, EMPTY_VALUE);
    ArrayInitialize(a_ibuf_140, EMPTY_VALUE);
    ArrayInitialize(a_ibuf_144, EMPTY_VALUE);
-   
+
    bool ai_152 = FALSE;
    bool ai_156 = FALSE;
 
@@ -6302,7 +6302,7 @@ double doda_bands2(string sig_currency, int sig_timeFrame, string indexLabel, in
    default:
       return EMPTY_VALUE;
    }
-   
+
 }
 
 //+------------------------------------------------------------------+
@@ -6323,14 +6323,14 @@ double bb_squeeze_dark(string sig_currency, int sig_timeFrame, int bolPrd, doubl
    ArrayResize(loB2, Nbars);
    ArrayResize(upK,  Nbars);
    ArrayResize(loK,  Nbars);
-   
+
    ArrayInitialize(upB,  EMPTY_VALUE);
    ArrayInitialize(upB2, EMPTY_VALUE);
    ArrayInitialize(loB,  EMPTY_VALUE);
    ArrayInitialize(loB2, EMPTY_VALUE);
    ArrayInitialize(upK,  EMPTY_VALUE);
    ArrayInitialize(loK,  EMPTY_VALUE);
-   
+
    int i,j,slippage=3;
    double breakpoint=0.0;
    double ema=0.0;
@@ -6371,7 +6371,7 @@ double bb_squeeze_dark(string sig_currency, int sig_timeFrame, int bolPrd, doubl
          upK[shift]=EMPTY_VALUE;
       }
    }
-   
+
    switch(indexBuffer) {
    case 0:
       return upB[shiftBuffer];
@@ -6415,10 +6415,10 @@ double LinearRegressionValue(string sig_currency, int sig_timeFrame, int Len,int
   double Num1 = Len * Sum1 - Sum2;
   double Num2 = SumBars * SumBars-Len * SumSqrBars;
 
-  if (Num2 != 0.0)  { 
-    Slope = Num1/Num2; 
-  } else { 
-    Slope = 0; 
+  if (Num2 != 0.0)  {
+    Slope = Num1/Num2;
+  } else {
+    Slope = 0;
   }
 
   double Intercept = (SumY - Slope*SumBars) /Len;
@@ -6435,9 +6435,9 @@ int getTrend(string symbol, int period, double& soglie[])
    {
       Alert("Errore: CurMAShift deve essere minore di PrevMAShift");
       PrevMAShift = 1;
-      CurMAShift = 0;      
+      CurMAShift = 0;
    }
-   
+
    int MA_Mode;
    switch (MA_Type)
      {
@@ -6450,22 +6450,22 @@ int getTrend(string symbol, int period, double& soglie[])
    double Poin;
    if(MarketInfo(symbol,MODE_DIGITS) == 3 || MarketInfo(symbol,MODE_DIGITS) == 5)   Poin = MarketInfo(symbol,MODE_POINT)*10;
    else Poin = MarketInfo(symbol,MODE_POINT);
-   
+
    double VelocitaBuffer[];
    double AccelerazioneBuffer[];
    ArrayResize(VelocitaBuffer,2*PrevMAShift+1);
    ArrayResize(AccelerazioneBuffer,2*PrevMAShift+1);
    ArrayInitialize(VelocitaBuffer,0);
    ArrayInitialize(AccelerazioneBuffer,0);
-   
+
    ArrayResize(soglie,3);
    ArrayInitialize(soglie,EMPTY_VALUE);
-   
+
    for(int mm=PrevMAShift;mm>=0;mm--)
    {
       double MACur=iMA(symbol,period,MAPeriod,0,MA_Mode,MA_AppliedPrice,mm+CurMAShift);
       double MAPrev=iMA(symbol,period,MAPeriod,0,MA_Mode,MA_AppliedPrice,mm+PrevMAShift);
-      
+
       VelocitaBuffer[mm] = (MACur-MAPrev)/Poin;
       AccelerazioneBuffer[mm] = VelocitaBuffer[mm+CurMAShift] - VelocitaBuffer[mm+PrevMAShift];
 
@@ -6479,73 +6479,73 @@ int getTrend(string symbol, int period, double& soglie[])
    //------------ trend al rialzo -----------------------+
    if ( VelocitaBuffer[0]>sogliaMinima_velocita && AccelerazioneBuffer[0]>0 && AccelerazioneBuffer[0]>sogliaMinima_accelerazione )
      {
-      //text = "trend crescente e forte   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend crescente e forte   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[0] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_CRESCENTE_FORTE);
      }
    else if ( VelocitaBuffer[0]>sogliaMinima_velocita && AccelerazioneBuffer[0]>0 && AccelerazioneBuffer[0]<=sogliaMinima_accelerazione )
      {
-      //text = "trend crescente con poca forza   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+2)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],1)+"";
+      //text = "trend crescente con poca forza   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+2)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],1)+"";
       soglie[0] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_CRESCENTE_POCO_FORTE);
      }
 
    else if ( VelocitaBuffer[0]>sogliaMinima_velocita && AccelerazioneBuffer[0]<0 )
      {
-      //text = "trend crescente ma accellerazione negativa   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend crescente ma accellerazione negativa   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[0] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_CRESCENTE_ACC_NEGATIVA);
      }
 
    //------------ trend al ribasso -----------------------+
    else if ( VelocitaBuffer[0]<-sogliaMinima_velocita && AccelerazioneBuffer[0]<0 && AccelerazioneBuffer[0]<-sogliaMinima_accelerazione )
      {
-      //text = "trend decrescente e forte   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend decrescente e forte   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[1] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_DECRESCENTE_FORTE);
      }
    else if ( VelocitaBuffer[0]<-sogliaMinima_velocita && AccelerazioneBuffer[0]<0 && AccelerazioneBuffer[0]>=-sogliaMinima_accelerazione )
      {
-      //text = "trend decrescente con poca forza   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend decrescente con poca forza   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[1] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_DECRESCENTE_POCO_FORTE);
      }
 
    else if ( VelocitaBuffer[0]<-sogliaMinima_velocita && AccelerazioneBuffer[0]>0 )
      {
-      //text = "trend decrescente ma accellerazione positiva   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend decrescente ma accellerazione positiva   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[1] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_DECRESCENTE_ACC_POSITIVA);
      }
 
    //------------ trend in laterale -----------------------+
    else if ( VelocitaBuffer[0]<=sogliaMinima_velocita && VelocitaBuffer[0]>=-sogliaMinima_velocita && AccelerazioneBuffer[0]>sogliaMinima_accelerazione )
      {
-      //text = "trend in laterale con un\'accelerazione per un trend al rialzo   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend in laterale con un\'accelerazione per un trend al rialzo   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[2] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_LATERALE_RIALZO);
      }
 
    else if ( VelocitaBuffer[0]<=sogliaMinima_velocita && VelocitaBuffer[0]>=-sogliaMinima_velocita && AccelerazioneBuffer[0]<-sogliaMinima_accelerazione )
      {
-      //text = "trend in laterale con un\'accelerazione per un trend al ribasso   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend in laterale con un\'accelerazione per un trend al ribasso   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[2] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_LATERALE_RIBASSO);
      }
 
-   else 
+   else
      {
-      //text = "trend in laterale   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit√† = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, √® sotto la soglia (="+DoubleToStr(sogliaMinima_velocita,2)+"), accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
+      //text = "trend in laterale   |   "+strMAType+"("+MAPeriod+", indici da "+PrevMAShift+" a "+CurMAShift+"): velocit‡ = "+DoubleToStr(VelocitaBuffer[i],2)+" pip tra "+(PrevMAShift-CurMAShift+1)+" barre consecutive, Ë sotto la soglia (="+DoubleToStr(sogliaMinima_velocita,2)+"), accelerazione = "+DoubleToStr(AccelerazioneBuffer[i],2)+"";
       soglie[2] = (MACur-MAPrev)/Poin;
-      
+
       return(TREND_LATERALE);
      }
 
@@ -6561,7 +6561,7 @@ int getTrendConfirmation(string symbol, int trend)
    //----
       trend_RL_Threshold = regressione_R1+regressione_R2+regressione_R3+regressione_R4;
       trend_RL = 0;
-      
+
       // ------------------------------
       // retta di regressione R1
       // ------------------------------
@@ -6581,8 +6581,8 @@ int getTrendConfirmation(string symbol, int trend)
          }
 
       }
-   
-   
+
+
       // ------------------------------
       // retta di regressione R2
       // ------------------------------
@@ -6602,8 +6602,8 @@ int getTrendConfirmation(string symbol, int trend)
          }
 
       }
-   
-   
+
+
       // ------------------------------
       // retta di regressione R3
       // ------------------------------
@@ -6621,10 +6621,10 @@ int getTrendConfirmation(string symbol, int trend)
          {
             trend_R3 = TREND_LATERALE;
          }
-         
+
       }
-   
-   
+
+
       // ------------------------------
       // retta di regressione R4
       // ------------------------------
@@ -6676,7 +6676,7 @@ void sqRegressionLine(string simbol, int timeframe, int PeriodRegression)
    ArrayResize(regression_line,2*PeriodRegression+1);
    ArrayInitialize(regression_line,EMPTY_VALUE);
 
-   for(int i=PeriodRegression; i>=0; i--) 
+   for(int i=PeriodRegression; i>=0; i--)
      {
       double Y_media=0.0, X_media=0.0, Sommatoria_XiYi=0.0, Sommatoria_Xi_due=0.0;
       double  q, m;
@@ -6702,9 +6702,9 @@ void sqRegressionLine(string simbol, int timeframe, int PeriodRegression)
       X_media = X_media/PeriodRegression;
       Y_media = Y_media/PeriodRegression;
 
-// Nell'equazione di una retta   y = mx + q   applicata al grafico dei cross valutari: 
-// --> q (intercetta della retta sull'asse delle ordinate y) ha un ordine di grandezza pari al prezzo, ad esempio q=1,49  
-// --> m (il coefficiente angolare o pendenza della retta) √® estremamente piccolo, ad esempio m=0,0001
+// Nell'equazione di una retta   y = mx + q   applicata al grafico dei cross valutari:
+// --> q (intercetta della retta sull'asse delle ordinate y) ha un ordine di grandezza pari al prezzo, ad esempio q=1,49
+// --> m (il coefficiente angolare o pendenza della retta) Ë estremamente piccolo, ad esempio m=0,0001
 //
 // Per la retta di regressione   y = mx + q   calcolata su n punti (Xi,Yi) valgono le seguenti formule
 //
@@ -6731,7 +6731,7 @@ bool sqVolatility(string symbol, int period)
    double vol=0;
 
    int limit=(Sedimentation+5);
-   
+
    ArrayResize(ind_c,limit*2);
    ArrayResize(vol_m,limit*2);
    ArrayResize(vol_t,limit*2);
@@ -6741,7 +6741,7 @@ bool sqVolatility(string symbol, int period)
    ArrayInitialize(vol_m,0);
    ArrayInitialize(vol_t,0);
    ArrayInitialize(thresholdBuffer,0);
-   
+
    for(int i=limit;i>=0;i--)
    {
       double sa=iATR(symbol,period,Viscosity,i);
@@ -6749,22 +6749,22 @@ bool sqVolatility(string symbol, int period)
       double s3=ind_c[i+3];
       double atr=NormalizeDouble(sa, MarketInfo(symbol, MODE_DIGITS) );
       double atr_s = iATR(symbol,period,Sedimentation,i);
-      
+
       if(atr_s != 0)
       {
          if(lag_supressor)
-            vol= sa/atr_s+lag_s_K*(s1-s3);   
+            vol= sa/atr_s+lag_s_K*(s1-s3);
          else
-            vol= sa/atr_s;   
+            vol= sa/atr_s;
          //vol_m[i]=vol;
       }
       else
       {
          return(false);
       }
-      
+
       double anti_thres = iStdDev(symbol,period,Viscosity,0,MODE_LWMA,PRICE_TYPICAL,i);
-      
+
       double std_dev_s = iStdDev(symbol,period,Sedimentation,0,MODE_LWMA,PRICE_TYPICAL,i);
       if(std_dev_s != 0)
       {
@@ -6775,20 +6775,20 @@ bool sqVolatility(string symbol, int period)
 
       double t=Threshold_level;
       t=t-anti_thres;
-      
+
       if (vol>t) {
          vol_t[i]=vol;vol_m[i]=vol;
-         
+
          if(i==0) return(true);
       }
       else {
          vol_t[i]=vol;vol_m[i]=EMPTY_VALUE;
-         
+
          if(i==0) return(false);
       }
 
       ind_c[i]=vol;
-      thresholdBuffer[i]=t;   
+      thresholdBuffer[i]=t;
    }
 
    return(false);
