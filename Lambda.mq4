@@ -1049,6 +1049,14 @@ if (global_counter % skip_ticks == 0 ) {
                double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                       DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
 
+               //--Fair distance from the Pivots
+               double highest_distance = MathMax(distance_from_support,distance_from_resistance);
+               double fair_perc_max    = highest_distance / (highest_distance - 15);
+               double fair_perc_min    = (highest_distance - 15) / highest_distance;
+               double fair_perc        = (distance_from_support/distance_from_resistance);
+
+               if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
+
                //--Near/Far from the Pivot
                if( SR_Range >= 15 )
                {
@@ -1066,14 +1074,6 @@ if (global_counter % skip_ticks == 0 ) {
 
                   if( perc_dist_resistance >= 0 && perc_dist_resistance <= 25) points += (sig_direction == DIR_LONG ? BB_LONG_ResistanceNear : BB_SHORT_ResistanceNear);
                   else points += (sig_direction == DIR_LONG ? BB_LONG_ResistanceFar : BB_SHORT_ResistanceFar);
-
-                  double highest_distance = MathMax(distance_from_support,distance_from_resistance);
-                  double fair_perc_max = highest_distance / (highest_distance - 15);
-                  double fair_perc_min = (highest_distance - 15) / highest_distance;
-                  double fair_perc     = (distance_from_support/distance_from_resistance);
-
-                  if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
-
                }
 
                //--Near/Far from a Daily level
@@ -1496,6 +1496,14 @@ if (global_counter % skip_ticks == 0 ) {
                double DSR_Range  = (nearest_daily_resistance - nearest_daily_support)*power;
                       DSR_Range  = (DSR_Range != 0 ? DSR_Range : 0.001);
 
+               //--Fair distance from the Pivots
+               double highest_distance = MathMax(distance_from_support,distance_from_resistance);
+               double fair_perc_max    = highest_distance / (highest_distance - 15);
+               double fair_perc_min    = (highest_distance - 15) / highest_distance;
+               double fair_perc        = (distance_from_support/distance_from_resistance);
+
+               if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
+
                //--Near/Far from the Pivot
                if( SR_Range >= 15 )
                {
@@ -1513,14 +1521,6 @@ if (global_counter % skip_ticks == 0 ) {
 
                   if( perc_dist_resistance >= 0 && perc_dist_resistance <= 25) points += (sig_direction == DIR_LONG ? ISW_LONG_ResistanceNear : ISW_SHORT_ResistanceNear);
                   else points += (sig_direction == DIR_LONG ? ISW_LONG_ResistanceFar : ISW_SHORT_ResistanceFar);
-
-                  double highest_distance = MathMax(distance_from_support,distance_from_resistance);
-                  double fair_perc_max = highest_distance / (highest_distance - 15);
-                  double fair_perc_min = (highest_distance - 15) / highest_distance;
-                  double fair_perc     = (distance_from_support/distance_from_resistance);
-
-                  if ( fair_perc < fair_perc_min || fair_perc > fair_perc_min ) points -= 10;
-
                }
 
                //--Near/Far from a Daily level
