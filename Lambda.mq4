@@ -120,11 +120,11 @@ double     bolDev                     = 2.0;
 int        keltPrd                    = 20;
 double     keltFactor                 = 1.5;
 int        momPrd                     = 12;
-int MAPeriod          = 50;     //[MAPeriod] - Periodi per la Media Mobile
+int MAPeriod          = 9;     //[MAPeriod] - Periodi per la Media Mobile
 int MA_Type           = 1;      //[MA_Type] - 0=SMA, 1=EMA, 2=SMMA, 3=LWMA
-int PrevMAShift       = 5;      //[PrevMAShift] - Numero di Barre indietro
+int PrevMAShift       = 3;      //[PrevMAShift] - Numero di Barre indietro
 int CurMAShift        = 0;      //[CurMAShift] - Numero di Barra corrente
-int MA_AppliedPrice   = 0;      //[MA_AppliedPrice] - Prezzo applicazione media: 0=close
+int MA_AppliedPrice   = 4;      //[MA_AppliedPrice] - Prezzo applicazione media: 0=close
 string  p0            = " 0 = close";
 string  p1            = " 1 = open";
 string  p2            = " 2 = high";
@@ -132,10 +132,10 @@ string  p3            = " 3 = low";
 string  p4            = " 4 = median(high+low)/2";
 string  p5            = " 5 = typical(high+low+close)/3";
 string  p6            = " 6 = weighted(high+low+close+close)/4";
-double sogliaMinima_velocita=2; //[sogliaMinima_velocita] - Soglia Minima di Velocità
+double sogliaMinima_velocita=3; //[sogliaMinima_velocita] - Soglia Minima di Velocità
 string smin0          = " misura in pip della minima velocità di soglia, cioè della minima variazione di pip, che si deve avere su due punti della media mobile";
 string smin1          = " perché si consideri il mercato corrente in trend e non in laterale.";
-double sogliaMinima_accelerazione=3; //[sogliaMinima_accelerazione] - Soglia Minima di Accelerazione
+double sogliaMinima_accelerazione=2; //[sogliaMinima_accelerazione] - Soglia Minima di Accelerazione
 string smin2          = " misura in pip della minima variazione di velocità che la media mobile deve avere su due punti della media mobile";
 string smin3          = " perché si consideri che il mercato sta dimnostrando una forza di accelerazione in grado di far partire un trend";
 bool regressione_R1   = true;   //[regressione_R1] - Se false, la retta di regressione R1 non viene visualizzata
@@ -156,9 +156,9 @@ int PeriodRegr_R4     = 30;     //[PeriodRegr_R4] - Numero di barre della retta 
 double pipLimite_R4   = 8;      //[pipLimite_R4] - Pip di trend della retta di regressione R4
 int applied_price     = 0;      //[applied_price] - 0 = Close price; 1 = Open price
 //---- input parameters
-int Viscosity         = 9;      //[Viscosity] - Volatility Viscosity
+int Viscosity         = 7;      //[Viscosity] - Volatility Viscosity
 int Sedimentation     = 50;     //[Sedimentation] - Volatility Sedimentation
-double Threshold_level= 1.55;   //[Threshold_level] - Volatility Threshold
+double Threshold_level= 1.1;   //[Threshold_level] - Volatility Threshold
 bool lag_supressor    = true;   //[lag_supressor] - Volatility Lag Suppressor
 
 //+------------------------------------------------------------------+
